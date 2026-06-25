@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import bridalSetImg from "@assets/img/eminence/bridal-jewellery-3d.png";
 import { RightArrow } from "@svg/index";
+import HeroHeading from "@components/common/hero-heading";
 
 const HeroBanner = () => {
   return (
@@ -22,17 +23,10 @@ const HeroBanner = () => {
         <div className="row align-items-center eminence-hero-grid">
           <div className="col-lg-6 col-md-6">
             <div className="slider__content-13 eminence-hero-copy">
-              <span className="slider__title-pre-13 eminence-hero-eyebrow">
-                The Bridal Signature
-              </span>
-
-              <h1
-                id="eminence-hero-title"
-                className="slider__title-13 eminence-hero-title"
-              >
+              <HeroHeading eyebrow="The Bridal Signature" id="eminence-hero-title">
                 Made for your
                 <span> unforgettable day.</span>
-              </h1>
+              </HeroHeading>
 
               <p className="eminence-hero-description">
                 Discover an heirloom-inspired gold necklace set, sculpted with

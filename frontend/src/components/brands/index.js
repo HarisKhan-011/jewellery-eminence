@@ -4,14 +4,8 @@ import React, { useEffect, useRef } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 // internal
-import brand_1 from "@assets/img/brand/brand-1.png";
-import brand_2 from "@assets/img/brand/brand-2.png";
-import brand_3 from "@assets/img/brand/brand-3.png";
-import brand_4 from "@assets/img/brand/brand-4.png";
-import brand_5 from "@assets/img/brand/brand-5.png";
-import brand_6 from "@assets/img/brand/brand-6.png";
-import brand_7 from "@assets/img/brand/brand-7.png";
-import brand_8 from "@assets/img/brand/brand-8.png";
+import brand_1 from "@assets/img/logo/eminence-logo-v2.png";
+import brand_2 from "@assets/img/logo/eminence-mark-v2.png";
 
 // slider setting 1
 const settings_1 = {
@@ -45,22 +39,22 @@ const settings_2 = {
 const brand_1_data = [
   { brand: brand_1 },
   { brand: brand_2 },
-  { brand: brand_3 },
-  { brand: brand_4 },
-  { brand: brand_5 },
-  { brand: brand_6 },
-  { brand: brand_7 },
-  { brand: brand_8 },
+  { brand: brand_1 },
+  { brand: brand_2 },
+  { brand: brand_1 },
+  { brand: brand_2 },
+  { brand: brand_1 },
+  { brand: brand_2 },
 ];
 const brand_2_data = [
-  { brand: brand_1 },
-  { brand: brand_3 },
-  { brand: brand_6 },
-  { brand: brand_5 },
-  { brand: brand_8 },
   { brand: brand_2 },
-  { brand: brand_7 },
-  { brand: brand_4 },
+  { brand: brand_1 },
+  { brand: brand_2 },
+  { brand: brand_1 },
+  { brand: brand_2 },
+  { brand: brand_1 },
+  { brand: brand_2 },
+  { brand: brand_1 },
 ];
 
 const Brands = () => {

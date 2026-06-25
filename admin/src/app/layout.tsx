@@ -2,19 +2,12 @@ import "./globals.css";
 import { Metadata } from "next";
 import "/public/assets/css/custom.css";
 import 'react-toastify/dist/ReactToastify.css';
-import { Poppins } from "next/font/google";
 import { Providers } from "@/redux/provider";
 
 export const metadata: Metadata = {
   title: "Eminence Jewellery Admin",
   description: "Eminence Jewellery administration panel.",
 };
-
-const poppins = Poppins({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["latin"],
-});
-
 
 export default function RootLayout({children}:{children: React.ReactNode}) {
   return (
@@ -29,7 +22,7 @@ export default function RootLayout({children}:{children: React.ReactNode}) {
         />
         <link rel="icon" href="/assets/img/logo/eminence-mark-v2.png" />
       </head>
-      <body className={poppins.className}>
+      <body>
         <Providers>
           {children}
         </Providers>

@@ -9,11 +9,10 @@ import OldNewPrice from "./old-new-price";
 import { formatPkrPrice, getProductBasePrice } from "@utils/format-price";
 import {
   getProductCategoryName,
+  getProductDisplayImage,
   getProductHoverImage,
   getProductImageAlt,
-  getProductPrimaryImage,
   getProductRatingValue,
-  getPublicProductImage,
 } from "@utils/product-image";
 import {
   add_cart_product,
@@ -29,9 +28,7 @@ const SingleProduct = ({ product, discountPrd = false, imageIndex }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const isWishlistAdded = wishlist.some(item => item._id === _id);
   const isAddedToCart = cart_products.some((prd) => prd._id === _id);
-  const primaryImage = Number.isInteger(imageIndex)
-    ? getPublicProductImage(imageIndex)
-    : getProductPrimaryImage(product);
+  const primaryImage = getProductDisplayImage(product, imageIndex);
   const hoverImage = getProductHoverImage(product);
   const categoryName = getProductCategoryName(product);
   const rating = getProductRatingValue(product);

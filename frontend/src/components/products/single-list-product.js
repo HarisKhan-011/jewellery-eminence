@@ -11,10 +11,9 @@ import { add_to_wishlist } from "src/redux/features/wishlist-slice";
 import { formatPkrAmount, getDiscountedPkrPrice, getProductBasePrice } from "@utils/format-price";
 import {
   getProductCategoryName,
+  getProductDisplayImage,
   getProductImageAlt,
-  getProductPrimaryImage,
   getProductRatingValue,
-  getPublicProductImage,
 } from "@utils/product-image";
 
 const SingleListProduct = ({ product, imageIndex }) => {
@@ -25,9 +24,7 @@ const SingleListProduct = ({ product, imageIndex }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const isWishlistAdded = wishlist.some((item) => item._id === _id);
   const isAddedToCart = cart_products.some((prd) => prd._id === _id);
-  const primaryImage = Number.isInteger(imageIndex)
-    ? getPublicProductImage(imageIndex)
-    : getProductPrimaryImage(product);
+  const primaryImage = getProductDisplayImage(product, imageIndex);
   const categoryName = getProductCategoryName(product);
   const rating = getProductRatingValue(product);
   const originalPrice = getProductBasePrice(product);

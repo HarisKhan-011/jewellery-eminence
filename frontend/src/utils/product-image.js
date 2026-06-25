@@ -1,3 +1,8 @@
+import {
+  getProductJewelleryProfile,
+  jewelleryCategories,
+} from "src/data/jewellery-categories";
+
 const getImageUrl = (image) => {
   if (!image) return "";
   if (typeof image === "string") return image;
@@ -10,6 +15,12 @@ const getImageUrl = (image) => {
     image.path ||
     ""
   );
+};
+
+export const breslateProductImage = "/assets/img/breslate/breslate.png";
+
+export const categoryProductImages = {
+  breslate: breslateProductImage,
 };
 
 export const publicProductImages = [
@@ -32,6 +43,11 @@ export const getPublicProductImage = (index = 0) => {
   return publicProductImages[normalizedIndex];
 };
 
+const getCategoryProductImage = (product = {}) => {
+  const categorySlug = getProductJewelleryProfile(product).category;
+  return categoryProductImages[categorySlug] || "";
+};
+
 const pushUniqueImage = (images, image) => {
   const url = getImageUrl(image);
 
@@ -42,6 +58,12 @@ const pushUniqueImage = (images, image) => {
 
 export const getProductImages = (product = {}) => {
   const images = [];
+  const categoryImage = getCategoryProductImage(product);
+
+  if (categoryImage) {
+    pushUniqueImage(images, categoryImage);
+    return images;
+  }
 
   pushUniqueImage(images, product.image);
   pushUniqueImage(images, product.img);
@@ -58,6 +80,12 @@ export const getProductImages = (product = {}) => {
   return images;
 };
 
+export const getProductDisplayImage = (product = {}, imageIndex) =>
+  getCategoryProductImage(product) ||
+  (Number.isInteger(imageIndex)
+    ? getPublicProductImage(imageIndex)
+    : getProductPrimaryImage(product));
+
 export const getProductPrimaryImage = (product = {}) =>
   getProductImages(product)[0] || "";
 
@@ -67,8 +95,12 @@ export const getProductHoverImage = (product = {}) =>
 export const getProductImageAlt = (product = {}) =>
   product.title ? `${product.title} product image` : "Product image";
 
-export const getProductCategoryName = (product = {}) =>
-  product.category?.name || product.parent || product.children || "";
+export const getProductCategoryName = (product = {}) => {
+  const categorySlug = getProductJewelleryProfile(product).category;
+  const category = jewelleryCategories.find((item) => item.slug === categorySlug);
+
+  return category?.title || product.category?.name || product.parent || product.children || "";
+};
 
 export const getProductRatingValue = (product = {}) => {
   const rating =

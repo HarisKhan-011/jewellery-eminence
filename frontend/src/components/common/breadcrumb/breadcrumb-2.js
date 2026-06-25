@@ -1,4 +1,4 @@
-import bg from "@assets/img/about/about-breadcrumb.jpg";
+import bg from "@assets/img/eminence/bridal-jewellery-hero.jpg";
 
 const BreadcrumbTwo = ({ subtitle, title }) => {
   return (

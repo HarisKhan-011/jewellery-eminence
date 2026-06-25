@@ -41,8 +41,9 @@ const ShopCategoryFirstSection = ({ activeCategory, isAllActive }) => {
         <h1 className="shop-category-first__title">Shop Jewellery</h1>
 
         <p className="shop-category-first__intro">
-          Explore rings, necklaces, diamonds, bridal jewellery, and bespoke
-          atelier pieces through a refined category-first shopping experience.
+          Explore rings, necklaces, diamonds, Breslate, bridal jewellery, and
+          bespoke atelier pieces through a refined category-first shopping
+          experience.
         </p>
 
         <nav className="shop-category-first__bar" aria-label="Shop categories">

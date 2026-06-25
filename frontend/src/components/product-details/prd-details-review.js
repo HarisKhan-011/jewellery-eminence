@@ -1,7 +1,7 @@
 import React from "react";
 // internal
-import user_1 from "@assets/img/users/user-1.jpg";
-import user_2 from "@assets/img/users/user-2.jpg";
+import user_1 from "@assets/img/logo/eminence-mark-v2.png";
+import user_2 from "@assets/img/contact/contact-man.png";
 import ProductReviewItem from "./product-review-item";
 import ReviewForm from "@components/forms/review-form";
 

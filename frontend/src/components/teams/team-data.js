@@ -1,19 +1,19 @@
 // images
-import img_1 from '@assets/img/team/team-1.jpg';
-import img_2 from '@assets/img/team/team-2.jpg';
-import img_3 from '@assets/img/team/team-3.jpg';
-import img_4 from '@assets/img/team/team-4.jpg';
-import img_5 from '@assets/img/team/team-5.jpg';
-import img_6 from '@assets/img/team/team-6.jpg';
+import img_1 from "@assets/img/contact/contact-man.png";
+import img_2 from "@assets/img/eminence/products/eminence-earrings.png";
+import img_3 from "@assets/img/eminence/products/anja.png";
+import img_4 from "@assets/img/eminence/bridal-jewellery-3d.png";
+import img_5 from "@assets/img/breslate/breslate.png";
+import img_6 from "@assets/img/logo/eminence-mark-v2.png";
 
 
 const team_data = [
   {
     id:1,
     img:img_1,
-    name:'Leslie Alexander',
-    title:'Founder-CO',
-    mail:'mailto:team@harry.com',
+    name:'Ayesha Khan',
+    title:'Founder',
+    mail:'mailto:support@eminencejewellery.com',
     social_links: [
       { link: 'http://facebook.com', target: '_blank', icon: 'fa-brands fa-facebook-f', name: 'Facebook' },
       { link: 'http://twitter.com', target: '_blank', icon: 'fa-brands fa-twitter', name: 'Twitter' },
@@ -24,9 +24,9 @@ const team_data = [
   {
     id:2,
     img:img_2,
-    name:'Annette Black',
-    title:'Product Designer',
-    mail:'mailto:team@harry.com',
+    name:'Sarah Malik',
+    title:'Jewellery Stylist',
+    mail:'mailto:support@eminencejewellery.com',
     social_links: [
       { link: 'http://facebook.com', target: '_blank', icon: 'fa-brands fa-facebook-f', name: 'Facebook' },
       { link: 'http://twitter.com', target: '_blank', icon: 'fa-brands fa-twitter', name: 'Twitter' },
@@ -37,9 +37,9 @@ const team_data = [
   {
     id:3,
     img:img_3,
-    name:'Kathryn Murphy',
+    name:'Mariam Ali',
     title:'Creative Director',
-    mail:'mailto:team@harry.com',
+    mail:'mailto:support@eminencejewellery.com',
     social_links: [
       { link: 'http://facebook.com', target: '_blank', icon: 'fa-brands fa-facebook-f', name: 'Facebook' },
       { link: 'http://twitter.com', target: '_blank', icon: 'fa-brands fa-twitter', name: 'Twitter' },
@@ -50,9 +50,9 @@ const team_data = [
   {
     id:4,
     img:img_4,
-    name:'Guy Hawkins',
-    title:'Developer',
-    mail:'mailto:team@harry.com',
+    name:'Zara Ahmed',
+    title:'Bridal Consultant',
+    mail:'mailto:support@eminencejewellery.com',
     social_links: [
       { link: 'http://facebook.com', target: '_blank', icon: 'fa-brands fa-facebook-f', name: 'Facebook' },
       { link: 'http://twitter.com', target: '_blank', icon: 'fa-brands fa-twitter', name: 'Twitter' },
@@ -63,9 +63,9 @@ const team_data = [
   {
     id:5,
     img:img_5,
-    name:'Deli Yanky',
-    title:'Consulting Officer',
-    mail:'mailto:team@harry.com',
+    name:'Hina Shah',
+    title:'Client Advisor',
+    mail:'mailto:support@eminencejewellery.com',
     social_links: [
       { link: 'http://facebook.com', target: '_blank', icon: 'fa-brands fa-facebook-f', name: 'Facebook' },
       { link: 'http://twitter.com', target: '_blank', icon: 'fa-brands fa-twitter', name: 'Twitter' },
@@ -76,9 +76,9 @@ const team_data = [
   {
     id:6,
     img:img_6,
-    name:'Zin Denvar',
-    title:'Sales Manager',
-    mail:'mailto:team@harry.com',
+    name:'Noor Fatima',
+    title:'Operations Lead',
+    mail:'mailto:support@eminencejewellery.com',
     social_links: [
       { link: 'http://facebook.com', target: '_blank', icon: 'fa-brands fa-facebook-f', name: 'Facebook' },
       { link: 'http://twitter.com', target: '_blank', icon: 'fa-brands fa-twitter', name: 'Twitter' },

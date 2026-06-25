@@ -1,6 +1,6 @@
 'use client';
 // internal
-import bg from "@assets/img/cta/13/cta-bg-1.jpg";
+import bg from "@assets/img/eminence/bridal-jewellery-hero.jpg";
 
 const ShopCta = () => {
   // handleSubmit

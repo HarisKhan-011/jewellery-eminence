@@ -1,7 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
 // internal
-import payment from '@assets/img/footer/footer-payment.png';
 import SocialLinks from "@components/social";
 import CopyrightText from "./copyright-text";
 import Logo from "@components/common/logo";
@@ -144,14 +142,9 @@ const Footer = () => {
             <div className="container">
               <div className="footer__bottom-inner">
                 <div className="row">
-                  <div className="col-sm-6">
-                    <div className="footer__copyright">
+                  <div className="col-12">
+                    <div className="footer__copyright text-center">
                       <CopyrightText />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="footer__payment text-sm-end">
-                      <Image src={payment} alt="payment" />
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import HeroHeading from "@components/common/hero-heading";
 
 const aboutHighlights = [
   {
@@ -29,16 +30,15 @@ const About = () => {
         <div className="container">
           <div className="row align-items-center g-5">
             <div className="col-lg-6">
-              <div className="eminence-about__content">
-                <span className="eminence-about__eyebrow">About Eminence</span>
-                <h1 className="eminence-about__title">
+              <div className="eminence-hero-copy">
+                <HeroHeading eyebrow="About Eminence">
                   Jewellery that belongs to your story.
-                </h1>
-                <p className="eminence-about__lead">
+                </HeroHeading>
+                <p className="eminence-hero-description">
                   Eminence Jewellery is a modern online destination for pieces
                   that bring confidence, beauty and meaning to every occasion.
                 </p>
-                <p className="eminence-about__text">
+                <p className="eminence-hero-description">
                   This project brings thoughtfully presented collections,
                   product discovery, wishlists, cart management and customer
                   accounts together in one refined shopping experience.

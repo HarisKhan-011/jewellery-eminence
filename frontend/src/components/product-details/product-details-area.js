@@ -11,6 +11,7 @@ import ProductDetailsTags from "./product-details-tags";
 import { add_cart_product } from "src/redux/features/cartSlice";
 import { add_to_wishlist } from "src/redux/features/wishlist-slice";
 import {
+  getProductCategoryName,
   getProductImageAlt,
   getProductImages,
   getProductPrimaryImage,
@@ -28,6 +29,7 @@ const ProductDetailsArea = ({ product }) => {
   } = product || {};
   const productImages = getProductImages(product);
   const primaryImage = getProductPrimaryImage(product);
+  const categoryName = getProductCategoryName(product);
   const [activeImg, setActiveImg] = useState(primaryImage);
   useEffect(() => {
     setActiveImg(primaryImage);
@@ -142,7 +144,7 @@ const ProductDetailsArea = ({ product }) => {
                 <span>{sku}</span>
               </div>
               {/* ProductDetailsCategories */}
-              <ProductDetailsCategories name={product?.category?.name} />
+              <ProductDetailsCategories name={categoryName} />
               {/* ProductDetailsCategories */}
 
               {/* Tags */}

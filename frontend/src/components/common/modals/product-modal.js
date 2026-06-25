@@ -15,6 +15,7 @@ import { add_to_wishlist } from "src/redux/features/wishlist-slice";
 import { Modal } from "react-bootstrap";
 import { handleModalShow } from "src/redux/features/productSlice";
 import {
+  getProductCategoryName,
   getProductImageAlt,
   getProductImages,
   getProductPrimaryImage,
@@ -26,6 +27,7 @@ const ProductModal = () => {
   const { _id, title, tags, discount, originalPrice, sku } = product || {};
   const productImages = getProductImages(product);
   const primaryImage = getProductPrimaryImage(product);
+  const categoryName = getProductCategoryName(product);
   const [activeImg, setActiveImg] = useState(primaryImage);
   const dispatch = useDispatch();
   const isWishlistAdded = wishlist.some((item) => item._id === _id);
@@ -169,7 +171,7 @@ const ProductModal = () => {
                 <span>{sku}</span>
               </div>
               {/* Product Categories */}
-              <ProductCategories />
+              <ProductCategories name={categoryName} />
               {/* Product Categories */}
 
               {/* Tags */}

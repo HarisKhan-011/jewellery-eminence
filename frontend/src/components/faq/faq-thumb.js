@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 // internal
-import thumb from "@assets/img/faq/faq-img-2.jpg";
+import thumb from "@assets/img/eminence/bridal-jewellery-hero.jpg";
 
 const FaqThumb = () => {
   return (

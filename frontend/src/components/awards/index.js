@@ -5,10 +5,10 @@ import Image from "next/image";
 import dynamic from 'next/dynamic';
 import Link from "next/link";
 // internal
-import award_img_1 from "@assets/img/award/award-1.jpg";
-import award_img_2 from "@assets/img/award/award-2.jpg";
-import award_img_3 from "@assets/img/award/award-3.jpg";
-import award_img_4 from "@assets/img/award/award-4.jpg";
+import award_img_1 from "@assets/img/eminence/bridal-jewellery-hero.jpg";
+import award_img_2 from "@assets/img/eminence/bridal-jewellery-3d.png";
+import award_img_3 from "@assets/img/eminence/products/anja.png";
+import award_img_4 from "@assets/img/eminence/products/eminence-earrings.png";
 import {RightArrowTwo} from "@svg/index";
 
 // data
@@ -16,33 +16,33 @@ const award_data = [
   {
     id: "one",
     topic: "FREE SHIPPING",
-    title: "Modern painting award jump",
+    title: "Complimentary delivery on selected orders",
     data_src: award_img_1,
-    subtitle: "Runner Up - “ Decor of the week “",
+    subtitle: "Careful packaging for your favourite pieces",
     delay: ".3s",
   },
   {
     id: "two",
     topic: "FREE RETURN",
-    title: "People's choice: best design",
+    title: "Easy support for returns and exchanges",
     data_src: award_img_2,
-    subtitle: "Runner Up - “ Decor of the week “",
+    subtitle: "Customer care for confident shopping",
     delay: ".5s",
   },
   {
     id: "three",
     topic: "SECURE PAYMENT",
-    title: "Webby's, Site of the Year",
+    title: "Protected checkout for every order",
     data_src: award_img_3,
-    subtitle: "Runner Up - “ Decor of the week “",
+    subtitle: "A clear and secure jewellery purchase flow",
     delay: ".7s",
   },
   {
     id: "four",
     topic: "BEST QUALITY",
-    title: "Awwwards site of the day",
+    title: "Selected pieces for lasting shine",
     data_src: award_img_4,
-    subtitle: "Runner Up - “ Decor of the week “",
+    subtitle: "Collections curated around timeless style",
     delay: ".7s",
   },
 ];
@@ -55,7 +55,7 @@ const Awards = () => {
           <div className="row">
             <div className="col-xxl-12">
               <div className={`section__title-wrapper-9 mb-55 text-center`}>
-                <h3 className="section__title-9">Our Awards.</h3>
+                <h3 className="section__title-9">Our Promise.</h3>
               </div>
             </div>
           </div>

@@ -261,7 +261,8 @@ body {
   animation: eminenceHeroCopyReveal 0.9s ease-out both;
 }
 
-.eminence-hero-section .eminence-hero-eyebrow {
+.eminence-hero-eyebrow {
+  position: relative;
   margin-bottom: 24px;
   padding-left: 54px;
   color: #8c6424;
@@ -273,7 +274,10 @@ body {
   text-transform: uppercase;
 }
 
-.eminence-hero-section .eminence-hero-eyebrow::after {
+.eminence-hero-eyebrow::after {
+  content: "";
+  position: absolute;
+  left: 0;
   top: 50%;
   width: 38px;
   height: 1px;
@@ -281,7 +285,7 @@ body {
   background: linear-gradient(90deg, #a67828, #d8b866);
 }
 
-.eminence-hero-section .eminence-hero-title {
+.eminence-hero-title {
   margin: 0 0 26px;
   color: #241a10;
   font-family: Georgia, "Times New Roman", serif;
@@ -532,7 +536,7 @@ body {
     padding: 68px 0 58px;
   }
 
-  .eminence-hero-section .eminence-hero-title {
+  .eminence-hero-title {
     font-size: clamp(48px, 5.4vw, 68px);
   }
 
@@ -551,7 +555,7 @@ body {
     padding-right: 18px;
   }
 
-  .eminence-hero-section .eminence-hero-title {
+  .eminence-hero-title {
     font-size: clamp(43px, 6vw, 58px);
   }
 
@@ -579,7 +583,7 @@ body {
     padding-right: 0;
   }
 
-  .eminence-hero-section .eminence-hero-title {
+  .eminence-hero-title {
     max-width: 520px;
     font-size: clamp(46px, 10vw, 64px);
   }
@@ -603,18 +607,18 @@ body {
     padding: 54px 0 38px;
   }
 
-  .eminence-hero-section .eminence-hero-eyebrow {
+  .eminence-hero-eyebrow {
     margin-bottom: 18px;
     padding-left: 44px;
     font-size: 10px;
     letter-spacing: 0.16em;
   }
 
-  .eminence-hero-section .eminence-hero-eyebrow::after {
+  .eminence-hero-eyebrow::after {
     width: 30px;
   }
 
-  .eminence-hero-section .eminence-hero-title {
+  .eminence-hero-title {
     margin-bottom: 20px;
     font-size: clamp(42px, 13vw, 56px);
     line-height: 1;
@@ -958,10 +962,6 @@ textarea:focus {
   padding: 110px 0 105px;
 }
 
-.eminence-about__content {
-  max-width: 610px;
-}
-
 .eminence-about__eyebrow {
   display: inline-block;
   margin-bottom: 20px;
@@ -971,32 +971,6 @@ textarea:focus {
   letter-spacing: 0.18em;
   line-height: 1;
   text-transform: uppercase;
-}
-
-.eminence-about__title {
-  max-width: 600px;
-  margin-bottom: 28px;
-  color: var(--eminence-ink);
-  font-size: clamp(46px, 5.4vw, 76px);
-  font-weight: 500;
-  letter-spacing: -0.045em;
-  line-height: 1.02;
-}
-
-.eminence-about__lead {
-  max-width: 580px;
-  margin-bottom: 17px;
-  color: var(--eminence-ink);
-  font-size: 20px;
-  line-height: 1.65;
-}
-
-.eminence-about__text {
-  max-width: 570px;
-  margin-bottom: 34px;
-  color: var(--eminence-muted);
-  font-size: 16px;
-  line-height: 1.8;
 }
 
 .eminence-about__actions {
@@ -1192,14 +1166,6 @@ textarea:focus {
 @media (max-width: 767px) {
   .eminence-about__hero {
     padding: 62px 0 68px;
-  }
-
-  .eminence-about__title {
-    font-size: 43px;
-  }
-
-  .eminence-about__lead {
-    font-size: 18px;
   }
 
   .eminence-about__image {

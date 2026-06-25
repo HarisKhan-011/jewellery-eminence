@@ -7,6 +7,7 @@ export const jewelleryCategories = [
   { title: "Anklets", slug: "anklets" },
   { title: "Jewellery Sets", slug: "jewellery-sets" },
   { title: "Diamonds", slug: "diamonds" },
+  { title: "Breslate", slug: "breslate" },
   { title: "Bridal Jewellery", slug: "bridal-jewellery" },
   { title: "Bespoke Atelier", slug: "bespoke-atelier" },
 ];
@@ -15,6 +16,7 @@ export const shopTopCategorySlugs = [
   "rings",
   "necklaces",
   "diamonds",
+  "breslate",
   "bridal-jewellery",
   "bespoke-atelier",
 ];
@@ -63,6 +65,15 @@ export const shopSidebarCategories = [
       { title: "Bridal Sets", slug: "bridal-jewellery" },
       { title: "Bridal Necklaces", slug: "bridal-jewellery" },
       { title: "Bridal Earrings", slug: "bridal-jewellery" },
+    ],
+  },
+  {
+    title: "Breslate",
+    slug: "breslate",
+    children: [
+      { title: "Breslate Sets", slug: "breslate" },
+      { title: "Breslate Bracelets", slug: "breslate" },
+      { title: "Breslate Gifts", slug: "breslate" },
     ],
   },
   {

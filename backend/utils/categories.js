@@ -66,8 +66,16 @@ const category = [
   {
     _id: "63a9a063d283e1a02a2a6b00",
     parent: "Bridal Jewellery",
-    img: "/assets/img/product/details/big/product-details-big-3.jpg",
+    img: "/assets/img/eminence/bridal-jewellery-hero.jpg",
     children: ["bridal-jewellery"],
+    status: "Show",
+    products: [],
+  },
+  {
+    _id: "63a9a063d283e1a02a2a6b02",
+    parent: "Breslate",
+    img: "/assets/img/breslate/breslate.png",
+    children: ["breslate"],
     status: "Show",
     products: [],
   },
