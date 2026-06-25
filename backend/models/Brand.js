@@ -1,0 +1,56 @@
+const mongoose = require("mongoose");
+const validator = require("validator");
+const { ObjectId } = mongoose.Schema.Types;
+
+const isLocalAssetPath = (value) =>
+  typeof value === "string" && value.startsWith("/assets/");
+
+const isImagePath = (value) => isLocalAssetPath(value) || validator.isURL(value);
+
+const brandSchema = mongoose.Schema({
+  logo: {
+    type: String,
+    required: false,
+    validate: [isImagePath, "Please provide valid url(s)"]
+  },
+  name: {
+    type: String,
+    trim: true,
+    required: [true, "Please provide a brand name"],
+    maxLength: 100,
+    unique: true,
+  },
+  email: {
+    type: String,
+    lowercase: true,
+    validate: [validator.isEmail, "Please provide a valid email"]
+  },
+  website: {
+    type: String,
+    validate: [validator.isURL, "Please provide a valid url"]
+  },
+  description:{
+    type: String,
+    required: false,
+  },
+  location: String,
+  status: {
+    type: String,
+    enum: ["active", "inactive"],
+    default: "active"
+  },
+  products: [{
+    type: ObjectId,
+    ref: "Products"
+  }],
+}, {
+  timestamps: true
+});
+
+const Brand = mongoose.model("Brand", brandSchema);
+
+module.exports = Brand;
+
+
+
+
