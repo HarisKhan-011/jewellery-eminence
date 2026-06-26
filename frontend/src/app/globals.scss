@@ -954,12 +954,56 @@ textarea:focus {
 
 /* Focused Eminence Jewellery about page */
 .eminence-about {
+  --about-paper: #fffaf2;
+  --about-surface: #fffdf8;
+  --about-line: rgba(166, 120, 40, 0.2);
+  --about-line-strong: rgba(166, 120, 40, 0.34);
+  --about-heading-font: Georgia, "Times New Roman", serif;
   color: var(--eminence-ink);
-  background: var(--eminence-cream);
+  background: var(--about-surface);
 }
 
 .eminence-about__hero {
-  padding: 110px 0 105px;
+  padding: 88px 0 84px;
+  background: var(--about-paper);
+  border-top: 1px solid var(--about-line);
+  border-bottom: 1px solid var(--about-line);
+}
+
+.eminence-about__hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  gap: 96px;
+  align-items: end;
+}
+
+.eminence-about__hero-copy {
+  max-width: 760px;
+}
+
+.eminence-about .eminence-hero-eyebrow {
+  margin-bottom: 18px;
+  color: var(--eminence-gold-dark);
+  letter-spacing: 0.18em;
+}
+
+.eminence-about .eminence-hero-title {
+  max-width: 760px;
+  margin-bottom: 26px;
+  color: var(--eminence-ink);
+  font-family: var(--about-heading-font);
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.eminence-about .eminence-hero-description {
+  max-width: 640px;
+  margin-bottom: 34px;
+  color: var(--eminence-muted);
+  font-size: 17px;
+  line-height: 1.78;
 }
 
 .eminence-about__eyebrow {
@@ -984,8 +1028,8 @@ textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  padding: 14px 28px;
+  min-height: 54px;
+  padding: 14px 30px;
   color: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -1022,111 +1066,162 @@ textarea:focus {
   transform: translateX(4px);
 }
 
-.eminence-about__image {
+.eminence-about__hero-note {
+  padding: 28px 0 4px 34px;
+  border-left: 1px solid var(--about-line-strong);
+}
+
+.eminence-about__hero-note p {
+  margin: 0;
+  color: var(--eminence-ink);
+  font-size: 19px;
+  line-height: 1.68;
+}
+
+.eminence-about__hero-note ul {
+  display: grid;
+  gap: 15px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eminence-about__hero-note li {
   position: relative;
-  min-height: 560px;
-  overflow: hidden;
-  background: var(--eminence-cream-deep);
-  box-shadow: 24px 24px 0 rgba(216, 184, 102, 0.2);
+  padding-left: 28px;
+  color: var(--eminence-muted);
+  font-size: 15px;
+  line-height: 1.55;
 }
 
-.eminence-about__image img {
-  object-fit: cover;
-}
-
-.eminence-about__image--3d {
-  isolation: isolate;
-  overflow: visible;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.98) 0 25%, transparent 62%),
-    radial-gradient(circle at 50% 50%, rgba(216, 184, 102, 0.28), transparent 67%),
-    var(--eminence-cream-soft);
-  border: 1px solid rgba(216, 184, 102, 0.38);
-  perspective: 1000px;
-}
-
-.eminence-about__image--3d::before,
-.eminence-about__image--3d::after {
+.eminence-about__hero-note li::before {
   position: absolute;
+  top: 11px;
+  left: 0;
+  width: 14px;
+  height: 1px;
   content: "";
-  z-index: -1;
-  border: 1px solid rgba(166, 120, 40, 0.22);
-  border-radius: 50%;
+  background: var(--eminence-gold-dark);
 }
 
-.eminence-about__image--3d::before {
-  width: 72%;
-  aspect-ratio: 1;
-  top: 14%;
-  left: 14%;
+.eminence-about__story {
+  padding: 92px 0 96px;
+  background: var(--about-surface);
+  border-bottom: 1px solid var(--about-line);
 }
 
-.eminence-about__image--3d::after {
-  width: 52%;
-  aspect-ratio: 1;
-  top: 24%;
-  left: 24%;
+.eminence-about__story-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+  gap: 86px;
+  align-items: start;
 }
 
-.eminence-about__image--3d img {
-  z-index: 1;
-  padding: 32px;
-  object-fit: contain;
-  filter: drop-shadow(0 30px 24px rgba(83, 52, 10, 0.24));
-  transform-origin: 50% 52%;
-  animation: eminence-jewellery-float 6s ease-in-out infinite;
+.eminence-about__text {
+  max-width: 850px;
+  border-top: 1px solid var(--about-line-strong);
 }
 
-@keyframes eminence-jewellery-float {
-  0%,
-  100% {
-    transform: translateY(0) rotateY(-3deg) rotateZ(-0.6deg);
-  }
+.eminence-about__text p {
+  margin: 0;
+  padding: 24px 0;
+  color: var(--eminence-muted);
+  font-size: 18px;
+  line-height: 1.78;
+  border-bottom: 1px solid var(--about-line);
+}
 
-  50% {
-    transform: translateY(-16px) rotateY(4deg) rotateZ(0.8deg) scale(1.015);
-  }
+.eminence-about__text p:last-child {
+  border-bottom-color: var(--about-line-strong);
+}
+
+.eminence-about__values {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.eminence-about__value {
+  min-height: 190px;
+  padding: 30px 28px;
+  background: #fff;
+  border: 1px solid var(--about-line);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.eminence-about__value:hover {
+  border-color: var(--about-line-strong);
+  box-shadow: 0 18px 40px rgba(69, 48, 21, 0.08);
+  transform: translateY(-3px);
+}
+
+.eminence-about__value span {
+  display: block;
+  width: 34px;
+  height: 2px;
+  margin-bottom: 30px;
+  background: var(--eminence-gold-dark);
+}
+
+.eminence-about__value h3 {
+  margin: 0 0 12px;
+  color: var(--eminence-ink);
+  font-family: var(--about-heading-font);
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.eminence-about__value p {
+  margin: 0;
+  color: var(--eminence-muted);
+  font-size: 15px;
+  line-height: 1.7;
 }
 
 .eminence-about__highlights {
-  padding: 100px 0 110px;
-  background: #fffdf8;
-  border-top: 1px solid var(--tp-border-2);
+  padding: 92px 0 104px;
+  background: var(--about-paper);
 }
 
 .eminence-about__section-heading {
   max-width: 720px;
-  margin-bottom: 50px;
+  margin-bottom: 48px;
 }
 
 .eminence-about__section-heading h2 {
   margin: 0;
   color: var(--eminence-ink);
-  font-size: clamp(34px, 4.2vw, 54px);
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.12;
+  font-family: var(--about-heading-font);
+  font-size: 62px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.06;
 }
 
 .eminence-about__highlight {
   height: 100%;
-  min-height: 265px;
-  padding: 36px 34px;
-  background: var(--eminence-cream);
-  border: 1px solid var(--tp-border-2);
+  min-height: 310px;
+  padding: 42px 38px;
+  background: #fff;
+  border: 1px solid var(--about-line);
+  border-top: 3px solid var(--eminence-gold-dark);
   transition: transform 0.25s ease, border-color 0.25s ease,
     box-shadow 0.25s ease;
 }
 
 .eminence-about__highlight:hover {
-  border-color: rgba(166, 120, 40, 0.55);
-  box-shadow: 0 18px 44px rgba(69, 48, 21, 0.08);
+  border-color: var(--about-line-strong);
+  box-shadow: 0 18px 48px rgba(69, 48, 21, 0.1);
   transform: translateY(-5px);
 }
 
 .eminence-about__highlight > span {
   display: block;
-  margin-bottom: 46px;
+  margin-bottom: 58px;
   color: var(--eminence-gold-dark);
   font-size: 13px;
   font-weight: 700;
@@ -1134,10 +1229,13 @@ textarea:focus {
 }
 
 .eminence-about__highlight h3 {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   color: var(--eminence-ink);
-  font-size: 24px;
-  font-weight: 600;
+  font-family: var(--about-heading-font);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: 0;
 }
 
 .eminence-about__highlight p {
@@ -1147,55 +1245,108 @@ textarea:focus {
   line-height: 1.75;
 }
 
+@media (max-width: 1199px) {
+  .eminence-about__hero-layout {
+    gap: 64px;
+  }
+
+  .eminence-about .eminence-hero-title {
+    font-size: 64px;
+  }
+
+  .eminence-about__values {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 991px) {
   .eminence-about__hero {
-    padding: 80px 0 90px;
+    padding: 72px 0 76px;
   }
 
-  .eminence-about__content {
-    max-width: 720px;
+  .eminence-about__hero-layout,
+  .eminence-about__story-layout {
+    grid-template-columns: 1fr;
+    gap: 42px;
   }
 
-  .eminence-about__image {
-    min-height: 480px;
-    margin-top: 15px;
-    box-shadow: 16px 16px 0 rgba(216, 184, 102, 0.2);
+  .eminence-about__hero-note {
+    max-width: 680px;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--about-line-strong);
+    border-left: 0;
   }
 }
 
 @media (max-width: 767px) {
   .eminence-about__hero {
-    padding: 62px 0 68px;
+    padding: 56px 0 62px;
   }
 
-  .eminence-about__image {
-    min-height: 360px;
-    box-shadow: 10px 10px 0 rgba(216, 184, 102, 0.2);
+  .eminence-about .eminence-hero-title {
+    font-size: 42px;
+    line-height: 1.08;
   }
 
-  .eminence-about__image--3d img {
-    padding: 20px;
+  .eminence-about .eminence-hero-description,
+  .eminence-about__hero-note p {
+    font-size: 15px;
+    line-height: 1.7;
   }
 
-  .eminence-about__highlights {
-    padding: 72px 0 78px;
+  .eminence-about__actions {
+    gap: 18px;
+  }
+
+  .eminence-about__button {
+    min-height: 48px;
+    padding: 12px 22px;
+    font-size: 14px;
+  }
+
+  .eminence-about__story {
+    padding: 64px 0 68px;
   }
 
   .eminence-about__section-heading {
-    margin-bottom: 34px;
+    margin-bottom: 30px;
+  }
+
+  .eminence-about__section-heading h2 {
+    font-size: 42px;
+    line-height: 1.1;
+  }
+
+  .eminence-about__text p {
+    font-size: 15px;
+    line-height: 1.72;
+  }
+
+  .eminence-about__values {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 38px;
+  }
+
+  .eminence-about__value {
+    min-height: auto;
+    padding: 26px 24px;
+  }
+
+  .eminence-about__highlights {
+    padding: 64px 0 72px;
   }
 
   .eminence-about__highlight {
     min-height: auto;
+    padding: 30px 26px;
   }
 
   .eminence-about__highlight > span {
-    margin-bottom: 30px;
+    margin-bottom: 38px;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .eminence-about__image--3d img {
-    animation: none;
+  .eminence-about__highlight h3 {
+    font-size: 30px;
   }
 }

@@ -6,7 +6,7 @@ import Footer from "@layout/footer";
 export const metadata = {
   title: "About - Eminence Jewellery",
   description:
-    "Learn about Eminence Jewellery and our focused online shopping experience for meaningful jewellery.",
+    "Learn about Eminence Jewellery, our online collections, bridal pieces, bespoke jewellery support and customer-first shopping experience.",
 };
 const About = () => {
   return (

@@ -12,7 +12,7 @@ const TextArea = () => {
               data-wow-duration="1s"
             >
               <h3 className="about__text-title">
-                It started with a <br /> bang now we are here.
+                Jewellery selected with <br /> care, clarity and meaning.
               </h3>
             </div>
           </div>
@@ -23,18 +23,17 @@ const TextArea = () => {
               data-wow-duration="1s"
             >
               <p>
-                Ut at maximus magna. Vestibulum interdum sapien in facilisis
-                imperdiet. Pellentesque habitant morbi tristique senectus et
-                netus et malesuada fames ac turpis egestas. Proin ac placerat
-                risus. Nullam eget tortor felis. Nulla facilisi.Vestibulum
-                mattis diam non luctus elementum. Cras sollicitudin, nisi in
-                semper viverra, felis diam consequat mi, quis tincidunt ligula
+                Eminence Jewellery is an online destination for rings,
+                necklaces, earrings, bracelets, bangles, anklets, diamonds,
+                bridal jewellery, jewellery sets and bespoke pieces. Our goal is
+                to make every customer feel confident while choosing jewellery
+                for daily wear, gifting, weddings and unforgettable occasions.
               </p>
 
               <p>
-                Nam nibh diam, varius quis lectus eget, laoreet cursus metus.
-                morbi augue lectus, dapibus eget justo nec, consectetur auctor
-                nis luctus neque.!
+                From product discovery to wishlist, cart, checkout, delivery
+                support and customer care, the store is built to keep your
+                shopping experience simple, refined and personal.
               </p>
             </div>
           </div>

@@ -7,7 +7,7 @@
     "dev:polling": "WATCHPACK_POLLING=true next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src --ext .js,.jsx"
   },
   "overrides": {
     "react": "$react",
@@ -22,7 +22,6 @@
     "@stripe/stripe-js": "^1.46.0",
     "bootstrap": "^5.2.3",
     "dayjs": "^1.11.7",
-    "eslint": "8.28.0",
     "next": "^15.0.4",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.6",
@@ -46,6 +45,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "eslint": "^8.57.1",
     "eslint-config-next": "^15.0.4"
   }
 }

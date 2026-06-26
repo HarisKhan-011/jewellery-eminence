@@ -14,7 +14,7 @@ export default function Terms() {
       <Header style_2={true} />
       <SectionTop
         title="Terms and Conditions"
-        subtitle="The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural."
+        subtitle="Please read these terms before shopping with Eminence Jewellery. They explain how orders, payments, delivery, returns, and custom jewellery requests are handled."
       />
       <TermsArea />
       <Footer />

@@ -12,7 +12,6 @@ const footerCompanyLinks = [
   { url: "/about", title: "About Us" },
   { url: "/shop", title: "Shop Jewellery" },
   { url: "/contact", title: "Contact Us" },
-  { url: "/faq", title: "FAQs" },
   { url: "/policy", title: "Privacy Policy" },
 ];
 
@@ -25,7 +24,6 @@ const footerShopLinks = shopTopCategorySlugs
   }));
 
 const footerSupportLinks = [
-  { url: "/faq", title: "FAQs" },
   { url: "/contact", title: "Customer Care" },
   { url: "/terms", title: "Terms & Conditions" },
   { url: "/policy", title: "Privacy Policy" },
@@ -121,13 +119,13 @@ const Footer = () => {
                       <div className="footer__contact">
                         <div className="footer__contact-call">
                           <span>
-                            <a href="tel:+96474244763">+964 742 44 763</a>
+                            <a href="tel:+96474244763">03424495548</a>
                           </span>
                         </div>
                         <div className="footer__contact-mail">
                           <span>
                             <a href="mailto:support@eminencejewellery.com">
-                              support@eminencejewellery.com
+                              eminencejewelery1@gmail.com
                             </a>
                           </span>
                         </div>
