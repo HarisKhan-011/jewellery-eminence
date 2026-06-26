@@ -2,9 +2,7 @@
 import React from "react";
 import useProductSubmit from "@/hooks/useProductSubmit";
 import DescriptionTextarea from "./description-textarea";
-import OfferDatePicker from "./offer-date-picker";
 import ProductTypeBrand from "./product-type-brand";
-import AdditionalInformation from "./additional-information";
 import ProductVariants from "./product-variants";
 import ProductImgUpload from "./product-img-upload";
 import ProductCategory from "../../category/product-category";
@@ -34,7 +32,6 @@ const ProductSubmit = () => {
     colors,
   } = useProductSubmit();
 
-  console.log('related image',relatedImages)
   return (
     <form onSubmit={handleSubmit(handleSubmitProduct)}>
       <div className="grid grid-cols-12 gap-6 mb-6">
@@ -139,7 +136,7 @@ const ProductSubmit = () => {
           </div>
 
           <div className="bg-white px-8 py-8 rounded-md mb-6">
-            <p className="mb-5 text-base text-black">Product Colors</p>
+            <p className="mb-5 text-base text-black">Metal / Stone Tags</p>
             {/* tags start */}
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mb-5">
               <Colors colors={colors} setColors={setColors} />

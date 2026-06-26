@@ -9,6 +9,7 @@ import Pagination from "../ui/Pagination";
 import OrderStatusChange from "./status-change";
 import {useGetAllOrdersQuery} from "@/redux/order/orderApi";
 import usePagination from "@/hooks/use-pagination";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 
 const OrderTable = () => {
@@ -129,10 +130,12 @@ const OrderTable = () => {
                     )}
                   </td>
                   <td className="px-3 py-3 font-normal text-[#675B4B] text-end">
-                    $
-                    {item.cart
-                      .reduce((acc, curr) => acc + curr.price, 0)
-                      .toFixed(2)}
+                    {formatCurrency(
+                      item.cart.reduce(
+                        (acc, curr) => acc + curr.price * curr.orderQuantity,
+                        0
+                      )
+                    )}
                   </td>
                   <td className="px-3 py-3 text-end">
                     <span

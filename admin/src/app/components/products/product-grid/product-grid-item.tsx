@@ -3,6 +3,7 @@ import Image from "next/image";
 // internal
 import { IProduct } from "@/types/product-type";
 import ProductGridAction from "./product-grid-action";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const ProductGridItem = ({ product }: { product: IProduct }) => {
   const { _id,image,originalPrice,title } = product || {};
@@ -31,7 +32,7 @@ const ProductGridItem = ({ product }: { product: IProduct }) => {
         </a>
         <div className="leading-none mb-2">
           <span className="text-base font-medium text-black">
-            ${originalPrice.toFixed(2)}
+            {formatCurrency(originalPrice)}
           </span>
         </div>
       </div>

@@ -12,8 +12,18 @@ import ShopLoader from "@components/loader/shop-loader";
 import ShopCategoryFirstSection from "@components/shop/shop-category-first-section";
 import { productMatchesJewelleryCategory } from "src/data/jewellery-categories";
 
+const sortNewestFirst = (items = []) =>
+  [...items].sort((a, b) => {
+    const dateA = Date.parse(a?.createdAt || "");
+    const dateB = Date.parse(b?.createdAt || "");
+
+    return (Number.isNaN(dateB) ? 0 : dateB) - (Number.isNaN(dateA) ? 0 : dateA);
+  });
+
 export default function ShopMainArea({ Category, category, brand, priceMin, max, priceMax, color }) {
-  const { data: products, isError, isLoading } = useGetShowingProductsQuery();
+  const { data: products, isError, isLoading } = useGetShowingProductsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const [shortValue,setShortValue] = useState("");
 
   // selectShortHandler
@@ -36,7 +46,7 @@ export default function ShopMainArea({ Category, category, brand, priceMin, max,
   }
 
   if (!isLoading && !isError && products?.products?.length > 0) {
-    let all_products = products.products;
+    let all_products = sortNewestFirst(products.products);
     let product_items = all_products;
 
     if (Category) {

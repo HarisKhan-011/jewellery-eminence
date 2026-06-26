@@ -67,7 +67,7 @@ const ProductTypeBrand = ({
     content = <ErrorMsg msg="There was an error" />;
   }
   if (!isLoading && isError && brands?.result.length === 0) {
-    content = <ErrorMsg msg="No Category Found" />;
+    content = <ErrorMsg msg="No Brand Found" />;
   }
 
   if (!isLoading && !isError && brands?.success) {

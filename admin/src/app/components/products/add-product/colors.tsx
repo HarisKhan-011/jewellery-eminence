@@ -18,9 +18,9 @@ const Colors = ({ colors, setColors, default_value }: IPropType) => {
         value={colors}
         onChange={setColors}
         name="colors"
-        placeHolder="enter colors"
+        placeHolder="enter metal, stone, or finish"
       />
-      <em>press enter to add new color</em>
+      <em>press enter to add a metal, stone, or finish</em>
     </div>
   );
 };

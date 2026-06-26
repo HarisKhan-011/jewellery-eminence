@@ -58,12 +58,6 @@ const pushUniqueImage = (images, image) => {
 
 export const getProductImages = (product = {}) => {
   const images = [];
-  const categoryImage = getCategoryProductImage(product);
-
-  if (categoryImage) {
-    pushUniqueImage(images, categoryImage);
-    return images;
-  }
 
   pushUniqueImage(images, product.image);
   pushUniqueImage(images, product.img);
@@ -77,14 +71,14 @@ export const getProductImages = (product = {}) => {
     product.relatedImages.forEach((image) => pushUniqueImage(images, image));
   }
 
+  pushUniqueImage(images, getCategoryProductImage(product));
+
   return images;
 };
 
 export const getProductDisplayImage = (product = {}, imageIndex) =>
-  getCategoryProductImage(product) ||
-  (Number.isInteger(imageIndex)
-    ? getPublicProductImage(imageIndex)
-    : getProductPrimaryImage(product));
+  getProductPrimaryImage(product) ||
+  (Number.isInteger(imageIndex) ? getPublicProductImage(imageIndex) : "");
 
 export const getProductPrimaryImage = (product = {}) =>
   getProductImages(product)[0] || "";

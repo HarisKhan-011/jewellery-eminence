@@ -10,6 +10,7 @@ import ProductVariants from "../add-product/product-variants";
 import ProductImgUpload from "../add-product/product-img-upload";
 import Tags from "../add-product/tags";
 import ProductCategory from "../../category/product-category";
+import Colors from "../add-product/colors";
 
 const EditProductSubmit = ({ id }: { id: string }) => {
   const { data: product, isError, isLoading } = useGetProductQuery(id);
@@ -161,6 +162,17 @@ const EditProductSubmit = ({ id }: { id: string }) => {
                   tags={tags}
                   setTags={setTags}
                   default_value={product.tags}
+                />
+              </div>
+            </div>
+
+            <div className="bg-white px-8 py-8 rounded-md mb-6">
+              <p className="mb-5 text-base text-black">Metal / Stone Tags</p>
+              <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 mb-5">
+                <Colors
+                  colors={colors}
+                  setColors={setColors}
+                  default_value={product.colors}
                 />
               </div>
             </div>

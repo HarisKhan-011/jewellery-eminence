@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const globalErrorHandler = require("./middleware/global-error-handler");
 // internal
 const ConnectDb = require("./config/db");
@@ -22,6 +23,7 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
 // routes
 app.use("/api/products", productsRoutes);

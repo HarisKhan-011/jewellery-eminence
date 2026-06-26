@@ -1,6 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import slugify from "slugify";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation';
 import { useAddProductMutation, useEditProductMutation } from "@/redux/product/productApi";
@@ -27,25 +26,20 @@ const useProductSubmit = () => {
 
 
   // useAddProductMutation
-  const [addProduct, { data: addProductData, isError, isLoading }] =
-    useAddProductMutation();
+  const [addProduct] = useAddProductMutation();
   // useAddProductMutation
-  const [editProduct, { data: editProductData, isError: editErr, isLoading: editLoading }] =
-    useEditProductMutation();
+  const [editProduct] = useEditProductMutation();
 
   const {
     register,
     handleSubmit,
-    setValue,
     control,
     formState: { errors },
-    reset,
   } = useForm();
   // resetForm
 
   // handle submit product
   const handleSubmitProduct = async (data: any) => {
-    console.log('data', data)
     // product data
     const productData: IAddProduct = {
       sku: data.sku,
@@ -65,7 +59,6 @@ const useProductSubmit = () => {
       quantity: Number(data.quantity),
       colors: colors,
     };
-    console.log('productData-------------------..>', productData)
     if (!img) {
       return notifyError("Product image is required");
     }

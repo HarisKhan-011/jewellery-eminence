@@ -1,50 +1,33 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
+
 const admins = [
   {
-    name:'Dorothy R. Brown',
-    image: "https://i.ibb.co/wpjNftS/user-2.jpg",
-    email: "dorothy@gmail.com",
+    name: "Eminence Super Admin",
+    image: "/assets/img/logo/eminence-mark-v2.png",
+    email: "admin@eminencejewellery.com",
     password: bcrypt.hashSync("123456"),
-    phone: "708-628-3122",
-    role: "Admin",
-    joiningData: new Date()
+    phone: "+92-300-111-2222",
+    role: "Super Admin",
+    joiningDate: new Date(),
   },
   {
-    name:'Alice B. Porter',
-    image: "https://i.ibb.co/wpjNftS/user-2.jpg",
-    email: "porter@gmail.com",
+    name: "Eminence Store Manager",
+    image: "/assets/img/logo/eminence-mark-v2.png",
+    email: "manager@eminencejewellery.com",
     password: bcrypt.hashSync("123456"),
-    phone: "708-628-3122",
-    role: "Admin",
-    joiningData: new Date()
-  },
-  {
-    name:'Corrie H. Cates',
-    image: "https://i.ibb.co/wpjNftS/user-2.jpg",
-    email: "corrie@gmail.com",
-    password: bcrypt.hashSync("123456"),
-    phone: "708-628-3122",
-    role: "Admin",
-    joiningData: new Date()
-  },
-  {
-    name:'Shawn E. Palmer',
-    image: "https://i.ibb.co/wpjNftS/user-2.jpg",
-    email: "palmer@gmail.com",
-    password: bcrypt.hashSync("123456"),
-    phone: "902-628-3122",
-    role: "CEO",
-    joiningData: new Date()
-  },
-  {
-    name:'Stacey J. Meikle',
-    image: "https://i.ibb.co/wpjNftS/user-2.jpg",
-    email: "meikle@gmail.com",
-    password: bcrypt.hashSync("123456"),
-    phone: "102-628-3122",
+    phone: "+92-300-333-4444",
     role: "Manager",
-    joiningData: new Date()
-  }
+    joiningDate: new Date(),
+  },
+  {
+    name: "Eminence Catalogue Admin",
+    image: "/assets/img/logo/eminence-mark-v2.png",
+    email: "catalogue@eminencejewellery.com",
+    password: bcrypt.hashSync("123456"),
+    phone: "+92-300-555-6666",
+    role: "Admin",
+    joiningDate: new Date(),
+  },
 ];
 
 module.exports = admins;

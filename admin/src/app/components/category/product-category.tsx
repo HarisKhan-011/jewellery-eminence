@@ -44,24 +44,24 @@ export default function ProductCategory({
     if (value && title) {
       setCategory({ id: value, name: title });
       setParent(title);
-    }
-    if (title) {
-      if (selectedCategory.includes(title)) {
-        setSelectedCategory(selectedCategory.filter((c) => c !== title));
-      } else {
-        setSelectedCategory([...selectedCategory, title]);
-      }
+      setChildren(title);
+      setSelectedCategory([title]);
     }
   };
 
   // handle sub category
-  const handleSubCategory = (subCate: string) => {
+  const handleSubCategory = (categoryId: string, parentCate: string, subCate: string) => {
+    setCategory({ id: categoryId, name: parentCate });
+    setParent(parentCate);
     setChildren(subCate);
-    if (selectedCategory.includes(subCate)) {
-      setSelectedCategory(selectedCategory.filter((c) => c !== subCate));
-    } else {
-      setSelectedCategory([...selectedCategory, subCate]);
-    }
+    setSelectedCategory([parentCate, subCate]);
+  };
+
+  const handleClearCategory = () => {
+    setCategory({ id: "", name: "" });
+    setParent("");
+    setChildren("");
+    setSelectedCategory([]);
   };
 
   // decide what to render
@@ -112,7 +112,11 @@ export default function ProductCategory({
                 >
                   <div className="p-0">
                     {item.children.map((sub: string, i: number) => (
-                      <h6 className="cursor-pointer" key={i} onClick={() => handleSubCategory(sub)}>
+                      <h6
+                        className="cursor-pointer"
+                        key={i}
+                        onClick={() => handleSubCategory(item._id, item.parent, sub)}
+                      >
                         {sub}
                       </h6>
                     ))}
@@ -132,7 +136,7 @@ export default function ProductCategory({
         {selectedCategory.map((c, i) => (
           <span key={i} className="tag">
             {c}
-            <b onClick={() => handleCategory("", c)}>×</b>
+            <b onClick={handleClearCategory}>×</b>
           </span>
         ))}
       </div>

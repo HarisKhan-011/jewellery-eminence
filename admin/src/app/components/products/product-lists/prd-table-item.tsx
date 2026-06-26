@@ -1,7 +1,8 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { IProduct } from "@/types/product-type";
 import EditDeleteBtn from "../../button/edit-delete-btn";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const ProductTableItem = ({ product }: { product: IProduct }) => {
 
@@ -26,7 +27,7 @@ const ProductTableItem = ({ product }: { product: IProduct }) => {
         {product.quantity}
       </td>
       <td className="px-3 py-3 font-normal text-[#675B4B] text-end">
-        ${product.originalPrice}
+        {formatCurrency(product.originalPrice)}
       </td>
       <td className="px-3 py-3 text-end">
         <span

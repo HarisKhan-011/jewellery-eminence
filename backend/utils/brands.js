@@ -1,95 +1,84 @@
 const brands = [
   {
     _id: "64b7735fae177ed4d70fb5c3",
-    logo: "https://i.ibb.co/Ydf3C1H/brand-1.png",
-    name: "Logitech",
-    description: "Logitech Business Support. Top Articles. Top Articles. Find Your Product. Search for your product by name, model number or part number.",
-    email: "logitech@gmail.com",
-    website: "logitech.com",
-    location: "Apples, Switzerland",
+    logo: "/assets/img/logo/eminence-mark-v2.png",
+    name: "Eminence Signature",
+    description:
+      "Fine jewellery collection focused on hand-finished gold, diamonds, and timeless bridal pieces.",
+    email: "signature@eminencejewellery.com",
+    website: "https://eminencejewellery.com",
+    location: "Lahore, Pakistan",
     status: "active",
     products: [
-      "63cca6791510c67feb3c0039",
-      "63cca6791510c67feb3c003a",
-      "63cca6791510c67feb3c003b",
-      "63cca6791510c67feb3c003c",
-      "63cca6791510c67feb3c0053",
-      "64b8ed89f2df046d6b270292"
-    ]
+      "64b78b80cf982ba18a26b13b",
+      "64b78b80cf982ba18a26b13e",
+      "64b78b80cf982ba18a26b12c",
+    ],
   },
   {
     _id: "64b7735fae177ed4d70fb5c7",
-    logo: "https://i.ibb.co/xqTCvsL/brand-5.png",
-    name: "Deepcool",
-    description: "Deepcool Business Support. Top Articles. Top Articles. Find Your Product. Search for your product by name, model number or part number.",
-    email: "deepcool@gmail.com",
-    website: "deepcool.com",
-    location: "Deepcool, US",
+    logo: "/assets/img/eminence/products/ChatGPT Image Jun 13, 2026, 11_05_50 PM (4).png",
+    name: "Aurelia Gold",
+    description:
+      "Luxury 18k gold jewellery crafted for everyday heirlooms, bangles, chains, and pendants.",
+    email: "atelier@aureliagold.com",
+    website: "https://aureliagold.com",
+    location: "Karachi, Pakistan",
     status: "active",
     products: [
-      "63cca6791510c67feb3c004d",
-      "63cca6791510c67feb3c004e",
-      "63cca6791510c67feb3c004f",
-      "63cca6791510c67feb3c0050",
-      "63cca6791510c67feb3c0051",
-      "63cca6791510c67feb3c0052",
-      "64b8f29df2df046d6b27029f"
-    ]
+      "64b78b80cf982ba18a26b12e",
+      "64b78b80cf982ba18a26b12f",
+      "64b78b80cf982ba18a26b130",
+    ],
   },
   {
     _id: "64b7735fae177ed4d70fb5c6",
-    logo: "https://i.ibb.co/n3Wktzh/brand-4.png",
-    name: "Apple",
-    description: "Apple Business Support. Top Articles. Top Articles. Find Your Product. Search for your product by name, model number or part number.",
-    email: "apple@gmail.com",
-    website: "apple.com",
-    location: "Apple, US",
+    logo: "/assets/img/eminence/products/ChatGPT Image Jun 13, 2026, 11_11_02 PM.png",
+    name: "Celeste Diamonds",
+    description:
+      "Diamond jewellery house specializing in brilliant-cut rings, tennis bracelets, and fine earrings.",
+    email: "concierge@celestediamonds.com",
+    website: "https://celestediamonds.com",
+    location: "Dubai, UAE",
     status: "active",
     products: [
-      "63cca6791510c67feb3c0046",
-      "63cca6791510c67feb3c0047",
-      "63cca6791510c67feb3c0048",
-      "63cca6791510c67feb3c0049",
-      "63cca6791510c67feb3c004a",
-      "63cca6791510c67feb3c004b",
-      "64b8d291d1022c8e6b2d2b34",
-      "64b8fe646416f09bea5e1420"
-    ]
+      "64b78b80cf982ba18a26b132",
+      "64b78b80cf982ba18a26b13b",
+      "64b78b80cf982ba18a26b12c",
+    ],
   },
   {
     _id: "64b7735fae177ed4d70fb5c4",
-    logo: "https://i.ibb.co/GTzWqnP/brand-2.png",
-    name: "Sony",
-    description: "Sony Business Support. Top Articles. Top Articles. Find Your Product. Search for your product by name, model number or part number.",
-    email: "sony@gmail.com",
-    website: "sony.com",
-    location: "Apples, America",
+    logo: "/assets/img/eminence/bridal-jewellery-hero.jpg",
+    name: "Noor Bridal",
+    description:
+      "Bridal jewellery collection featuring statement sets, layered necklaces, and ceremonial pieces.",
+    email: "studio@noorbridal.com",
+    website: "https://noorbridal.com",
+    location: "Islamabad, Pakistan",
     status: "active",
     products: [
-      "63cca6791510c67feb3c003d",
-      "63cca6791510c67feb3c003e",
-      "63cca6791510c67feb3c003f",
-      "63cca6791510c67feb3c0040",
-      "63cca6791510c67feb3c0041"
-    ]
+      "64b78b80cf982ba18a26b131",
+      "64b78b80cf982ba18a26b135",
+      "64b78b80cf982ba18a26b133",
+    ],
   },
   {
     _id: "64b7735fae177ed4d70fb5c5",
-    logo: "https://i.ibb.co/YPzHpCD/brand-3.png",
-    name: "Samsung",
-    description: "Samsung Business Support. Top Articles. Top Articles. Find Your Product. Search for your product by name, model number or part number.",
-    email: "samsung@gmail.com",
-    website: "samsung.com",
-    location: "Samsung, US",
+    logo: "/assets/img/breslate/breslate.png",
+    name: "Breslate Atelier",
+    description:
+      "Curated bracelet and breslate collection with polished gold finishes and gemstone detailing.",
+    email: "care@breslateatelier.com",
+    website: "https://breslateatelier.com",
+    location: "Lahore, Pakistan",
     status: "active",
     products: [
-      "63cca6791510c67feb3c0042",
-      "63cca6791510c67feb3c0043",
-      "63cca6791510c67feb3c0044",
-      "63cca6791510c67feb3c0045",
-      "63cca6791510c67feb3c004c"
-    ]
-  }
-]
+      "64b78b80cf982ba18a26b12d",
+      "64b78b80cf982ba18a26b132",
+      "64b78b80cf982ba18a26b134",
+    ],
+  },
+];
 
 module.exports = brands;

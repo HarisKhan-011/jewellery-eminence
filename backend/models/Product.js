@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 const valid = require("validator");
 const { ObjectId } = mongoose.Schema.Types;
 
-const isLocalAssetPath = (value) =>
-  typeof value === "string" && value.startsWith("/assets/");
+const isLocalImagePath = (value) =>
+  typeof value === "string" &&
+  (value.startsWith("/assets/") || value.startsWith("/uploads/"));
 
-const isImagePath = (value) => isLocalAssetPath(value) || valid.isURL(value);
+const isImagePath = (value) =>
+  isLocalImagePath(value) ||
+  valid.isURL(value, { require_protocol: true, require_tld: false });
 
 const productSchema = mongoose.Schema({
   sku: {
