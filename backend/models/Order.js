@@ -63,6 +63,49 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    paymentMethod: {
+      type: String,
+      required: false,
+      trim: true,
+    },
+    paymentMethodCode: {
+      type: String,
+      required: false,
+      enum: ["jazzcash", "easypaisa", "bank_transfer", "cards", "cod"],
+    },
+    paymentStatus: {
+      type: String,
+      required: false,
+      enum: [
+        "authorizing",
+        "awaiting_gateway_authorization",
+        "awaiting_manual_verification",
+        "pending_collection",
+        "paid",
+        "failed",
+        "refunded",
+      ],
+      default: "awaiting_gateway_authorization",
+    },
+    paymentDetails: {
+      type: Object,
+      required: false,
+    },
+    paymentSecurity: {
+      type: Object,
+      required: false,
+    },
+    orderNote: {
+      type: String,
+      required: false,
+      trim: true,
+      maxlength: 1000,
+    },
+    termsAccepted: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     cardInfo: {
       type: Object,
       required: false,

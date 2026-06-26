@@ -6,7 +6,24 @@ import Logo from "@components/common/logo";
 import { formatPkrAmount, getDiscountedPkrPrice } from "@utils/format-price";
 
 export default function InvoiceArea({innerRef,info}) {
-    const { name, country, city, contact, invoice, createdAt, cart, cardInfo, shippingCost, discount,totalAmount } = info || {};
+    const {
+      name,
+      country,
+      city,
+      contact,
+      invoice,
+      createdAt,
+      cart = [],
+      cardInfo,
+      paymentMethod,
+      paymentStatus,
+      paymentDetails,
+      shippingCost,
+      discount,
+      totalAmount,
+    } = info || {};
+    const paymentLabel =
+      paymentMethod || cardInfo?.type || paymentDetails?.provider || "Pending";
   return (
     <div ref={innerRef} className="invoice__wrapper grey-bg-15 pt-40 pb-40 pl-40 pr-40 tp-invoice-print-wrapper">
       {/* <!-- invoice header --> */}
@@ -99,7 +116,10 @@ export default function InvoiceArea({innerRef,info}) {
           <div className="col-lg-3 col-md-4">
             <div className="invoice__payment-method mb-30">
               <h5 className="mb-0">Payment Method</h5>
-              <p className="tp-font-medium text-uppercase">{cardInfo.type}</p>
+              <p className="tp-font-medium text-uppercase">{paymentLabel}</p>
+              {paymentStatus && (
+                <p className="mb-0 text-capitalize">{paymentStatus.replace(/_/g, " ")}</p>
+              )}
             </div>
           </div>
           <div className="col-lg-3 col-md-4">

@@ -65,7 +65,7 @@ const HeroBanner = () => {
                   src={bridalSetImg}
                   alt="Realistic three-dimensional gold bridal necklace with matching earrings"
                   className="eminence-hero-product__image"
-                  sizes="(max-width: 575px) 88vw, (max-width: 991px) 48vw, 620px"
+                  sizes="(max-width: 575px) 88vw, (max-width: 991px) 44vw, 560px"
                   priority
                 />
               </div>

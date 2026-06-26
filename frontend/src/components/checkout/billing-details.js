@@ -114,6 +114,7 @@ const BillingDetails = ({ register, errors }) => {
           <div className="checkout-form-list">
             <label>Order Notes</label>
             <textarea
+              {...register("orderNote")}
               id="checkout-mess"
               cols="30"
               rows="10"

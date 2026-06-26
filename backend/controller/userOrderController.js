@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const dayjs = require('dayjs')
 
+const isCashPayment = (order) =>
+  order.paymentMethodCode === "cod" ||
+  order.paymentMethod === "COD" ||
+  order.paymentMethod === "Cash on Delivery";
+
+const isCardPayment = (order) =>
+  order.paymentMethodCode === "cards" ||
+  order.paymentMethod === "Card" ||
+  order.paymentMethod === "Debit / Credit Cards";
+
 // get all orders user
 module.exports.getOrderByUser = async (req, res,next) => {
   try {
@@ -125,9 +135,9 @@ exports.getDashboardAmount = async (req, res,next) => {
     let todayCardPaymentAmount = 0;
 
     todayOrders.forEach((order) => {
-      if (order.paymentMethod === "COD") {
+      if (isCashPayment(order)) {
         todayCashPaymentAmount += order.totalAmount;
-      } else if (order.paymentMethod === "Card") {
+      } else if (isCardPayment(order)) {
         todayCardPaymentAmount += order.totalAmount;
       }
     });
@@ -140,9 +150,9 @@ exports.getDashboardAmount = async (req, res,next) => {
     let yesterDayCardPaymentAmount = 0;
 
     yesterdayOrders.forEach((order) => {
-      if (order.paymentMethod === "COD") {
+      if (isCashPayment(order)) {
         yesterDayCashPaymentAmount += order.totalAmount;
-      } else if (order.paymentMethod === "Card") {
+      } else if (isCardPayment(order)) {
         yesterDayCardPaymentAmount += order.totalAmount;
       }
     });
@@ -261,6 +271,7 @@ exports.getDashboardRecentOrder = async (req, res,next) => {
           createdAt: 1,
           updatedAt: 1,
           paymentMethod: 1,
+          paymentStatus: 1,
           name: 1,
           user: 1,
           totalAmount: 1,

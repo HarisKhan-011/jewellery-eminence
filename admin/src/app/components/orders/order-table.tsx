@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 // internal
@@ -7,16 +7,34 @@ import { Search } from "@/svg";
 import ErrorMsg from "../common/error-msg";
 import Pagination from "../ui/Pagination";
 import OrderStatusChange from "./status-change";
+import PaymentStatusChange from "./payment-status-change";
 import {useGetAllOrdersQuery} from "@/redux/order/orderApi";
 import usePagination from "@/hooks/use-pagination";
 import { formatCurrency } from "@/utils/formatCurrency";
 
 
 const OrderTable = () => {
-  const { data: orders, isError, isLoading, error } = useGetAllOrdersQuery();
+  const { data: orders, isError, isLoading } = useGetAllOrdersQuery();
   const [searchVal,setSearchVal] = useState<string>("");
   const [selectVal,setSelectVal] = useState<string>("");
-  const paginationData = usePagination(orders?.data || [], 5);
+  const filteredOrders = useMemo(() => {
+    let orderItems = orders?.data || [];
+
+    if (searchVal) {
+      orderItems = orderItems.filter((v) =>
+        v.invoice.toString().includes(searchVal)
+      );
+    }
+
+    if (selectVal) {
+      orderItems = orderItems.filter(
+        (v) => v.status.toLowerCase() === selectVal.toLowerCase()
+      );
+    }
+
+    return orderItems;
+  }, [orders?.data, searchVal, selectVal]);
+  const paginationData = usePagination(filteredOrders, 5);
   const { currentItems, handlePageClick, pageCount } = paginationData;
 
   // decide what to render
@@ -33,17 +51,9 @@ const OrderTable = () => {
   }
 
   if (!isLoading && !isError && orders?.success) {
-    let orderItems = orders.data;
-    if(searchVal){
-      orderItems = orderItems.filter(v => v.invoice.toString().includes(searchVal))
-    }
-    if(selectVal){
-      orderItems = orderItems.filter(v => v.status.toLowerCase() === selectVal.toLowerCase())
-    }
-
     content = (
       <>
-        <table className="w-[1500px] 2xl:w-full text-base text-left text-gray-500">
+        <table className="w-[1780px] 2xl:w-full text-base text-left text-gray-500">
           <thead className="bg-white">
             <tr className="border-b border-gray6 text-tiny">
               <th
@@ -63,6 +73,18 @@ const OrderTable = () => {
                 className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end"
               >
                 QTY
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[190px]"
+              >
+                Payment
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[190px]"
+              >
+                Payment Status
               </th>
               <th
                 scope="col"
@@ -129,12 +151,34 @@ const OrderTable = () => {
                       0
                     )}
                   </td>
+                  <td className="px-3 py-3 font-normal text-[#675B4B]">
+                    <span className="block text-heading font-medium">
+                      {item.paymentMethod || "Legacy payment"}
+                    </span>
+                    {item.paymentMethodCode && (
+                      <span className="block text-[11px] uppercase tracking-wide text-[#8b7a65]">
+                        {item.paymentMethodCode.replace(/_/g, " ")}
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-3 py-3 font-normal text-[#675B4B]">
+                    <span
+                      className={`inline-flex text-[11px] px-3 py-1 rounded-md leading-none font-medium ${
+                        item.paymentStatus === "paid"
+                          ? "text-success bg-success/10"
+                          : item.paymentStatus === "failed"
+                          ? "text-danger bg-danger/10"
+                          : item.paymentStatus === "refunded"
+                          ? "text-indigo-500 bg-indigo-100"
+                          : "text-warning bg-warning/10"
+                      }`}
+                    >
+                      {(item.paymentStatus || "pending").replace(/_/g, " ")}
+                    </span>
+                  </td>
                   <td className="px-3 py-3 font-normal text-[#675B4B] text-end">
                     {formatCurrency(
-                      item.cart.reduce(
-                        (acc, curr) => acc + curr.price * curr.orderQuantity,
-                        0
-                      )
+                      item.totalAmount
                     )}
                   </td>
                   <td className="px-3 py-3 text-end">
@@ -159,8 +203,12 @@ const OrderTable = () => {
                   </td>
 
                   <td className="px-9 py-3 text-end">
-                    <div className="flex items-center justify-end space-x-2">
+                    <div className="flex items-center justify-end gap-2">
                       <OrderStatusChange id={item._id}/>
+                      <PaymentStatusChange
+                        id={item._id}
+                        currentStatus={item.paymentStatus}
+                      />
                     </div>
                   </td>
                   {/* order actions */}
@@ -174,7 +222,7 @@ const OrderTable = () => {
         {/* pagination start */}
         <div className="flex justify-between items-center flex-wrap">
           <p className="mb-0 text-tiny">
-             Showing 1- {currentItems.length} of {orders?.data.length}
+             Showing 1- {currentItems.length} of {filteredOrders.length}
           </p>
           <div className="pagination py-3 flex justify-end items-center sm:mx-8">
             <Pagination

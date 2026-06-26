@@ -4,6 +4,7 @@ const {
   addOrder,
   getSingleOrder,
   updateOrderStatus,
+  updatePaymentStatus,
   getOrders,
 } = require("../controller/orderController");
 
@@ -20,5 +21,6 @@ router.get("/:id", getSingleOrder);
 
 // update status
 router.patch("/update-status/:id", updateOrderStatus);
+router.patch("/update-payment-status/:id", updatePaymentStatus);
 
 module.exports = router;

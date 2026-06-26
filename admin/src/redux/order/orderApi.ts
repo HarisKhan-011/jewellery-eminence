@@ -58,6 +58,16 @@ export const authApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["AllOrders","DashboardRecentOrders"],
     }),
+    updatePaymentStatus: builder.mutation<IUpdateStatusOrderRes, { id: string, paymentStatus: { paymentStatus: string } }>({
+      query({ id, paymentStatus }) {
+        return {
+          url: `/api/order/update-payment-status/${id}`,
+          method: "PATCH",
+          body: paymentStatus,
+        };
+      },
+      invalidatesTags: ["AllOrders", "DashboardRecentOrders"],
+    }),
   }),
 });
 
@@ -68,5 +78,6 @@ export const {
   useGetRecentOrdersQuery,
   useGetAllOrdersQuery,
   useUpdateStatusMutation,
+  useUpdatePaymentStatusMutation,
   useGetSingleOrderQuery,
 } = authApi;

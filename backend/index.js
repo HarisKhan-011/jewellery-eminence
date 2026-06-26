@@ -4,6 +4,12 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const globalErrorHandler = require("./middleware/global-error-handler");
+const {
+  noSqlInjectionGuard,
+  originGuard,
+  rateLimit,
+  securityHeaders,
+} = require("./middleware/security");
 // internal
 const ConnectDb = require("./config/db");
 const { secret } = require("./config/secret");
@@ -21,8 +27,13 @@ const brandRoutes = require("./routes/brandRoutes");
 const app = express();
 
 // middleware
-app.use(express.json());
+app.disable("x-powered-by");
+app.use(securityHeaders);
+app.use(express.json({ limit: "1mb" }));
 app.use(cors());
+app.use(originGuard);
+app.use(noSqlInjectionGuard);
+app.use("/api/order", rateLimit({ windowMs: 60 * 1000, max: 45 }));
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
 // routes

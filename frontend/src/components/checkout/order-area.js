@@ -2,12 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 // internal
 import OrderDetails from "./order-details";
-import PaymentCardElement from "@components/order/pay-card-element";
+import LocalPaymentMethods from "./local-payment-methods";
 import OrderSingleCartItem from "./order-single-cart-item";
 
 const OrderArea = ({
   stripe,
-  error,
+  cardError,
   register,
   errors,
   discountAmount,
@@ -16,6 +16,8 @@ const OrderArea = ({
   handleShippingCost,
   setClientSecret,
   isCheckoutSubmit,
+  selectedPaymentMethod,
+  paymentFlowStatus,
 }) => {
   const { cart_products } = useSelector((state) => state.cart);
   return (
@@ -54,40 +56,16 @@ const OrderArea = ({
         </table>
       </div>
 
-      <div className="payment-method faq__wrapper tp-accordion">
-        <div className="accordion" id="checkoutAccordion">
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="checkoutOne">
-              <button
-                className="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#bankOne"
-                aria-expanded="true"
-                aria-controls="bankOne"
-              >
-                Direct Bank Transfer
-                <span className="accordion-btn"></span>
-              </button>
-            </h2>
-            <div
-              id="bankOne"
-              className="accordion-collapse collapse show"
-              aria-labelledby="checkoutOne"
-              data-bs-parent="#checkoutAccordion"
-            >
-              <div className="accordion-body">
-                <PaymentCardElement
-                  stripe={stripe}
-                  cardError={error}
-                  cart_products={cart_products}
-                  isCheckoutSubmit={isCheckoutSubmit}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <LocalPaymentMethods
+        register={register}
+        errors={errors}
+        selectedPaymentMethod={selectedPaymentMethod}
+        cardError={cardError}
+        stripe={stripe}
+        cart_products={cart_products}
+        isCheckoutSubmit={isCheckoutSubmit}
+        paymentFlowStatus={paymentFlowStatus}
+      />
     </div>
   );
 };

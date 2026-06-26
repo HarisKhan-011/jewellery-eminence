@@ -142,8 +142,33 @@ const OrderDetailsArea = ({ id }: { id: string }) => {
                     PAYMENT METHOD
                   </span>
                   <span className="text-base font-semibold block">
-                    {orderData.paymentMethod}
+                    {orderData.paymentMethod || "Legacy payment"}
                   </span>
+                  {orderData.paymentStatus && (
+                    <span className="mt-1 text-sm text-gray-500 capitalize">
+                      {orderData.paymentStatus.replace(/_/g, " ")}
+                    </span>
+                  )}
+                  {orderData.paymentDetails?.reference && (
+                    <span className="mt-1 text-sm text-gray-500">
+                      Ref: {orderData.paymentDetails.reference}
+                    </span>
+                  )}
+                  {orderData.paymentDetails?.receipt?.url && (
+                    <a
+                      href={orderData.paymentDetails.receipt.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-1 text-sm text-theme font-medium"
+                    >
+                      View receipt
+                    </a>
+                  )}
+                  {orderData.paymentDetails?.mobileNumber && (
+                    <span className="mt-1 text-sm text-gray-500">
+                      Wallet: {orderData.paymentDetails.mobileNumber}
+                    </span>
+                  )}
                 </div>
                 <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
                   <span className="mb-1 font-bold text-base uppercase block">

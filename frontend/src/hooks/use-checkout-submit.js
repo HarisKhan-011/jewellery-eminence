@@ -21,16 +21,25 @@ import {
   formatPkrPrice,
   getDiscountedPkrPrice,
 } from "@utils/format-price";
+import {
+  getPaymentMethodById,
+  localPaymentMethods,
+} from "@data/local-payment-methods";
+
+const walletPaymentMethods = ["jazzcash", "easypaisa"];
+const apiBaseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL || "").replace(
+  /\/$/,
+  ""
+);
 
 const useCheckoutSubmit = () => {
   const { data: offerCoupons, isError, isLoading } = useGetOfferCouponsQuery();
   const [addOrder, {}] = useAddOrderMutation();
   const [createPaymentIntent, {}] = useCreatePaymentIntentMutation();
   const { cart_products } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.auth);
+  const { user, accessToken } = useSelector((state) => state.auth);
   const { shipping_info } = useSelector((state) => state.order);
   const { total, setTotal } = useCartInfo();
-  const [couponInfo, setCouponInfo] = useState({});
   const [cartTotal, setCartTotal] = useState("");
   const [minimumAmount, setMinimumAmount] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
@@ -40,6 +49,7 @@ const useCheckoutSubmit = () => {
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [paymentFlowStatus, setPaymentFlowStatus] = useState("ready");
   
   const dispatch = useDispatch();
   const router = useRouter();
@@ -50,8 +60,16 @@ const useCheckoutSubmit = () => {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      paymentMethod: "jazzcash",
+      acceptTerms: false,
+      savePreferredPayment: false,
+    },
+  });
+  const selectedPaymentMethod = watch("paymentMethod") || "jazzcash";
 
   const couponRef = useRef("");
 
@@ -59,12 +77,22 @@ const useCheckoutSubmit = () => {
     if (localStorage.getItem("couponInfo")) {
       const data = localStorage.getItem("couponInfo");
       const coupon = JSON.parse(data);
-      setCouponInfo(coupon);
       setDiscountPercentage(coupon.discountPercentage);
       setMinimumAmount(convertToPkrAmount(coupon.minimumAmount));
       setDiscountProductType(coupon.productType);
     }
   }, []);
+
+  useEffect(() => {
+    const preferredMethod = localStorage.getItem("preferredPaymentMethod");
+    const isSupported = localPaymentMethods.some(
+      (method) => method.id === preferredMethod
+    );
+
+    if (isSupported) {
+      setValue("paymentMethod", preferredMethod);
+    }
+  }, [setValue]);
 
   useEffect(() => {
     if (minimumAmount - discountAmount > total || cart_products.length === 0) {
@@ -99,21 +127,25 @@ const useCheckoutSubmit = () => {
     discountProductType,
   ]);
 
-  // create payment intent
+  // create payment intent for card gateway only
   useEffect(() => {
-    if (cartTotal) {
+    if (selectedPaymentMethod === "cards" && cartTotal) {
       createPaymentIntent({
           price: Math.round(cartTotal),
       })
         .then((data) => {
-          setClientSecret(data.data.clientSecret);
-          console.log(data);
+          if (data?.data?.clientSecret) {
+            setClientSecret(data.data.clientSecret);
+          }
         })
-        .then((error) => {
+        .catch((error) => {
           console.log(error);
+          notifyError("Unable to initialize secure card payment.");
         });
+    } else {
+      setClientSecret("");
     }
-  }, [createPaymentIntent, cartTotal]);
+  }, [createPaymentIntent, cartTotal, selectedPaymentMethod]);
 
   // handleCouponCode
   const handleCouponCode = (e) => {
@@ -177,96 +209,196 @@ const useCheckoutSubmit = () => {
     setValue("contact", shipping_info.contact);
   }, [user, setValue, shipping_info,router]);
 
+  const uploadPaymentReceipt = async (file) => {
+    if (!file) return null;
+
+    const formData = new FormData();
+    formData.append("image", file, file.name);
+
+    const headers = {};
+    if (accessToken) {
+      headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    const response = await fetch(`${apiBaseUrl}/api/cloudinary/add-img`, {
+      method: "POST",
+      headers,
+      body: formData,
+    });
+
+    const result = await response.json();
+    if (!response.ok || !result?.success) {
+      throw new Error(result?.message || "Receipt upload failed");
+    }
+
+    return {
+      url: result.data.url,
+      id: result.data.id,
+      fileName: file.name,
+      fileType: file.type,
+      fileSize: file.size,
+    };
+  };
+
+  const addOrderAndRedirect = async (orderData, successMessage) => {
+    const result = await addOrder(orderData);
+
+    if (result?.error) {
+      const message =
+        result.error?.data?.message ||
+        "Order could not be confirmed. Please retry payment.";
+      throw new Error(message);
+    }
+
+    if (orderData.savePreferredPayment) {
+      localStorage.setItem(
+        "preferredPaymentMethod",
+        orderData.paymentMethodCode
+      );
+    }
+
+    router.push(`/order/${result.data?.order?._id}`);
+    notifySuccess(successMessage || "Your Order Confirmed!");
+  };
+
+  const buildPaymentDetails = async (data, method) => {
+    const receipt = data.paymentReceipt?.[0]
+      ? await uploadPaymentReceipt(data.paymentReceipt[0])
+      : null;
+
+    return {
+      provider: method.title,
+      channel: method.subtitle,
+      currency: "PKR",
+      mobileNumber: walletPaymentMethods.includes(method.id)
+        ? data.paymentMobile
+        : "",
+      reference:
+        method.id === "bank_transfer" ? data.paymentReference?.trim() : "",
+      receipt,
+      requiresOtp: walletPaymentMethods.includes(method.id),
+      requiresManualVerification: method.id === "bank_transfer",
+      requiresCollection: method.id === "cod",
+    };
+  };
+
   // submitHandler
   const submitHandler = async (data) => {
     dispatch(set_shipping(data));
     setIsCheckoutSubmit(true);
+    setPaymentFlowStatus("authorizing");
+    setCardError("");
+    const selectedMethod = getPaymentMethodById(data.paymentMethod);
 
-    let orderInfo = {
-      name: `${data.firstName} ${data.lastName}`,
-      address: data.address,
-      contact: data.contact,
-      email: data.email,
-      city: data.city,
-      country: data.country,
-      zipCode: data.zipCode,
-      shippingOption: data.shippingOption,
-      status: "pending",
-      cart: cart_products,
-      subTotal: total,
-      shippingCost: shippingCost,
-      discount: discountAmount,
-      totalAmount: cartTotal,
-      user:`${user?._id}`
-    };
-    if (!stripe || !elements) {
-      return;
-    }
-    const card = elements.getElement(CardElement);
-    if (card == null) {
-      return;
-    }
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
-    });
+    try {
+      const paymentDetails = await buildPaymentDetails(data, selectedMethod);
+      const orderInfo = {
+        name: `${data.firstName} ${data.lastName}`,
+        address: data.address,
+        contact: data.contact,
+        email: data.email,
+        city: data.city,
+        country: data.country,
+        zipCode: data.zipCode,
+        shippingOption: data.shippingOption,
+        orderNote: data.orderNote,
+        status: "pending",
+        cart: cart_products,
+        subTotal: total,
+        shippingCost: shippingCost,
+        discount: discountAmount,
+        totalAmount: cartTotal,
+        user: `${user?._id}`,
+        paymentMethod: selectedMethod.title,
+        paymentMethodCode: selectedMethod.id,
+        paymentStatus:
+          selectedMethod.id === "cards" ? "authorizing" : selectedMethod.paymentStatus,
+        paymentDetails,
+        paymentSecurity: {
+          csrfProtected: true,
+          xssProtected: true,
+          serverValidated: true,
+          duplicatePaymentCheck: true,
+          timeoutProtection: true,
+        },
+        termsAccepted: Boolean(data.acceptTerms),
+        savePreferredPayment: Boolean(data.savePreferredPayment),
+      };
 
-    if (error) {
-      setCardError(error?.message);
-      setIsCheckoutSubmit(false);
-    } else {
-      setCardError("");
-      const orderData = {
+      if (selectedMethod.id !== "cards") {
+        setPaymentFlowStatus("verifying");
+        await addOrderAndRedirect(
+          orderInfo,
+          selectedMethod.id === "bank_transfer"
+            ? "Order received. Bank transfer is pending verification."
+            : "Your order has been received for secure verification."
+        );
+        return;
+      }
+
+      if (!stripe || !elements || !clientSecret) {
+        throw new Error("Secure card payment is not ready yet.");
+      }
+
+      const card = elements.getElement(CardElement);
+      if (card == null) {
+        throw new Error("Please enter your card details.");
+      }
+
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card,
+      });
+
+      if (error) {
+        setCardError(error?.message);
+        throw new Error(error?.message);
+      }
+
+      await handlePaymentWithStripe({
         ...orderInfo,
         cardInfo: paymentMethod,
-      };
-      handlePaymentWithStripe(orderData);
+      });
+    } catch (err) {
+      const message = err?.message || "Payment failed. Please retry.";
+      notifyError(message);
+      setPaymentFlowStatus("failed");
       setIsCheckoutSubmit(false);
-      return;
     }
   };
 
   // handlePaymentWithStripe
   const handlePaymentWithStripe = async (order) => {
-    try {
-      const { paymentIntent, error: intentErr } =
-        await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: elements.getElement(CardElement),
-            billing_details: {
-              name: user?.name,
-              email: user?.email,
-            },
+    const { paymentIntent, error: intentErr } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: order.name || user?.name,
+            email: order.email || user?.email,
           },
-        });
-      if (intentErr) {
-        notifyError(intentErr.message);
-      } else {
-        // notifySuccess("Your payment processed successfully");
-      }
+        },
+      });
 
-      const orderData = {
+    if (intentErr) {
+      setCardError(intentErr.message);
+      throw new Error(intentErr.message);
+    }
+
+    if (paymentIntent?.status !== "succeeded") {
+      throw new Error("Card payment was not completed by the gateway.");
+    }
+
+    setPaymentFlowStatus("verifying");
+
+    await addOrderAndRedirect(
+      {
         ...order,
         paymentIntent,
-      };
-
-      addOrder({
-        ...orderData,
-      })
-      .then((result) => {
-          if(result?.error){
-
-          }
-          else {
-            router.push(`/order/${result.data?.order?._id}`);
-            notifySuccess("Your Order Confirmed!");
-          }
-          if(result.data?.success){
-          }
-        })
-    } catch (err) {
-      console.log(err);
-    }
+        paymentStatus: "paid",
+      },
+      "Your payment processed successfully."
+    );
   };
 
   return {
@@ -289,7 +421,8 @@ const useCheckoutSubmit = () => {
     clientSecret,
     setClientSecret,
     cartTotal,
-    isCheckoutSubmit,
+    selectedPaymentMethod,
+    paymentFlowStatus,
   };
 };
 

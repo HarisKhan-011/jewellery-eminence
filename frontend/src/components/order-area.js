@@ -38,6 +38,9 @@ const SingleOrderArea = ({ orderId }) => {
       createdAt,
       cart,
       cardInfo,
+      paymentMethod,
+      paymentStatus,
+      paymentDetails,
       shippingCost,
       discount,
       totalAmount,
@@ -61,7 +64,7 @@ const SingleOrderArea = ({ orderId }) => {
           </div>
 
           {/* invoice area start */}
-          <InvoiceArea innerRef={contentRef} info={{name,country,city,contact,invoice,createdAt,cart,cardInfo,shippingCost,discount,totalAmount}} />
+          <InvoiceArea innerRef={contentRef} info={{name,country,city,contact,invoice,createdAt,cart,cardInfo,paymentMethod,paymentStatus,paymentDetails,shippingCost,discount,totalAmount}} />
           {/* invoice area end */}
 
           {/* invoice print  */}

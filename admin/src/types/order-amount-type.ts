@@ -31,7 +31,28 @@ export interface Order {
   totalAmount: number;
   shippingOption: string;
   paymentMethod: string;
+  paymentMethodCode?: string;
+  paymentStatus?: string;
+  paymentDetails?: {
+    provider?: string;
+    channel?: string;
+    currency?: string;
+    mobileNumber?: string;
+    reference?: string;
+    receipt?: {
+      url?: string;
+      id?: string;
+      fileName?: string;
+      fileType?: string;
+      fileSize?: number;
+    };
+    requiresOtp?: boolean;
+    requiresManualVerification?: boolean;
+    requiresCollection?: boolean;
+  };
+  paymentSecurity?: Record<string, unknown>;
   orderNote?: string;
+  termsAccepted?: boolean;
   invoice: number;
   status: string;
   createdAt?: string;
@@ -77,6 +98,7 @@ export interface IOrder {
   name: string;
   totalAmount: number;
   paymentMethod: string;
+  paymentStatus?: string;
   status: string;
   createdAt: string;
   updatedAt: string;
