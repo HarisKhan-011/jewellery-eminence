@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:polling": "WATCHPACK_POLLING=true next dev",
+    "dev": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev -p 3000",
+    "dev:polling": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev -p 3000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3000",
     "lint": "eslint src --ext .js,.jsx"
   },
   "overrides": {
