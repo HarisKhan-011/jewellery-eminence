@@ -1,13 +1,20 @@
 import Link from 'next/link';
+import Image from 'next/image';
 // internal
-import banner from "@assets/img/eminence/bridal-jewellery-hero.jpg";
+import banner from "@assets/img/eminence/bridal-jewellery-3d.png";
 import { RightArrow } from '@svg/index';
 
 const ShopBanner = () => {
   return (
     <section className="banner__area">
       <div className="container">
-        <div className="banner__inner include-bg" style={{backgroundImage:`url(${banner.src})`}}>
+        <div className="banner__inner include-bg eminence-shop-banner">
+          <Image
+            src={banner}
+            alt="Gold bridal necklace set with matching earrings"
+            className="eminence-shop-banner__image"
+            sizes="(max-width: 575px) 82vw, (max-width: 991px) 48vw, 560px"
+          />
           <div className="row">
             <div className="col-xl-5 col-lg-6 col-md-8">
               <div className="banner__content">

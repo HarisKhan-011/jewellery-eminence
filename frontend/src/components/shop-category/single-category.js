@@ -12,7 +12,7 @@ const SingleCategory = ({ item }) => {
             alt={item.title}
             width={272}
             height={181}
-            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </div>
         <div className="product__category-content">
