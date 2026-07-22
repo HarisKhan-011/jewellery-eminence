@@ -68,15 +68,6 @@ export const shopSidebarCategories = [
     ],
   },
   {
-    title: "Breslate",
-    slug: "breslate",
-    children: [
-      { title: "Breslate Sets", slug: "breslate" },
-      { title: "Breslate Bracelets", slug: "breslate" },
-      { title: "Breslate Gifts", slug: "breslate" },
-    ],
-  },
-  {
     title: "Diamonds",
     slug: "diamonds",
     children: [

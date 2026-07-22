@@ -60,26 +60,6 @@ export const localPaymentMethods = [
     paymentStatus: "awaiting_manual_verification",
   },
   {
-    id: "cards",
-    title: "Debit / Credit Cards",
-    subtitle: "Visa, Mastercard, UnionPay",
-    logoLabel: "Cards",
-    logoClass: "cards",
-    description:
-      "Pay by debit or credit card through a PCI-DSS compliant gateway with secure tokens and encrypted transaction handling.",
-    highlights: [
-      "Visa",
-      "Mastercard",
-      "UnionPay Optional",
-      "PCI-DSS Gateway",
-    ],
-    badges: ["PCI-DSS", "Tokenized", "Encrypted"],
-    detailTitle: "Secure card payment",
-    detailCopy:
-      "Card data is tokenized by the gateway. Eminence Jewellery never stores full card numbers or CVV values.",
-    paymentStatus: "authorizing",
-  },
-  {
     id: "cod",
     title: "Cash on Delivery",
     subtitle: "Eligible Products",

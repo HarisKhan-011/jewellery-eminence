@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 // internal
 import { ShopShortSelect, ShopShortTab, ShowingResult } from "./shop-top-bar";
-import ShopSidebar from "@components/common/sidebar/shop-sidebar";
 import ProductGridItems from "./prd-grid-items";
 import ProductListItems from "./prd-list-items";
 
-const ShopArea = ({ products,all_products,shortHandler }) => {
+const ShopArea = ({ products, shortHandler }) => {
   const [showingGridItems, setShowingGridItems] = useState(0);
   const [showingListItems, setShowingListItems] = useState(0);
   const [tabActive, setActiveTab] = useState("grid");
@@ -36,12 +35,7 @@ const ShopArea = ({ products,all_products,shortHandler }) => {
         </div>
         <div className="shop__main">
           <div className="row">
-            <div className="col-lg-3">
-              {/* sidebar start */}
-              <ShopSidebar all_products={all_products} />
-              {/* sidebar end */}
-            </div>
-            <div className={`col-lg-9 order-first order-lg-last`}>
+            <div className="col-12">
               <div className="shop__tab-content mb-40">
                 <div className="tab-content" id="shop_tab_content">
                   <ProductGridItems
@@ -55,7 +49,6 @@ const ShopArea = ({ products,all_products,shortHandler }) => {
                     setShowingListItems={setShowingListItems}
                   />
                 </div>
-                {/* pagination*/}
               </div>
             </div>
           </div>

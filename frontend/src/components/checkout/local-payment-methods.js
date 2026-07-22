@@ -3,19 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import ErrorMessage from "@components/error-message/error";
-import PaymentCardElement from "@components/order/pay-card-element";
 import {
   localPaymentMethods,
   paymentSecurityBadges,
 } from "@data/local-payment-methods";
-import { Lock, Mobile, Payment, Truck } from "@svg/index";
+import { Lock, Mobile, Truck } from "@svg/index";
 
 const walletMethodIds = ["jazzcash", "easypaisa"];
 
 const getDetailStepTitle = (methodId) => {
   if (walletMethodIds.includes(methodId)) return "Verify wallet";
   if (methodId === "bank_transfer") return "Upload proof";
-  if (methodId === "cards") return "Enter card";
   return "Review delivery";
 };
 
@@ -26,38 +24,22 @@ const getDetailStepCopy = (methodId) => {
   if (methodId === "bank_transfer") {
     return "Add reference and upload your receipt.";
   }
-  if (methodId === "cards") {
-    return "Enter secure gateway card details.";
-  }
   return "Confirm order and delivery eligibility.";
 };
 
 const PaymentIcon = ({ methodId }) => {
   if (walletMethodIds.includes(methodId)) return <Mobile />;
   if (methodId === "cod") return <Truck />;
-  if (methodId === "bank_transfer") return <Lock />;
-  return <Payment />;
+  return <Lock />;
 };
 
-const PaymentLogo = ({ method }) => {
-  if (method.id === "cards") {
-    return (
-      <span className="eminence-payment-logo eminence-payment-logo--cards">
-        <span>VISA</span>
-        <span>MC</span>
-        <span>UP</span>
-      </span>
-    );
-  }
-
-  return (
-    <span
-      className={`eminence-payment-logo eminence-payment-logo--${method.logoClass}`}
-    >
-      {method.logoLabel}
-    </span>
-  );
-};
+const PaymentLogo = ({ method }) => (
+  <span
+    className={`eminence-payment-logo eminence-payment-logo--${method.logoClass}`}
+  >
+    {method.logoLabel}
+  </span>
+);
 
 const ProcessingState = ({ status }) => {
   const label =
@@ -84,8 +66,6 @@ const LocalPaymentMethods = ({
   register,
   errors,
   selectedPaymentMethod,
-  cardError,
-  stripe,
   cart_products,
   isCheckoutSubmit,
   paymentFlowStatus,
@@ -95,7 +75,6 @@ const LocalPaymentMethods = ({
     localPaymentMethods[0];
   const isWallet = walletMethodIds.includes(selectedMethod.id);
   const isBankTransfer = selectedMethod.id === "bank_transfer";
-  const isCards = selectedMethod.id === "cards";
   const activeFlowIndex = isCheckoutSubmit
     ? paymentFlowStatus === "verifying"
       ? 2
@@ -106,7 +85,7 @@ const LocalPaymentMethods = ({
   const paymentFlowSteps = [
     {
       title: "Select method",
-      copy: "Choose JazzCash, Easypaisa, bank transfer, card, or COD.",
+      copy: "Choose JazzCash, Easypaisa, bank transfer, or COD.",
     },
     {
       title: getDetailStepTitle(selectedMethod.id),
@@ -284,15 +263,7 @@ const LocalPaymentMethods = ({
             </div>
           )}
 
-          {isCards && (
-            <PaymentCardElement
-              stripe={stripe}
-              cardError={cardError}
-              isCheckoutSubmit={isCheckoutSubmit}
-            />
-          )}
-
-          {!isWallet && !isBankTransfer && !isCards && (
+          {!isWallet && !isBankTransfer && (
             <div className="eminence-payment-note">
               <strong>No payment fields required.</strong>
               <span>Our team confirms availability and collection before dispatch.</span>

@@ -6,15 +6,12 @@ import LocalPaymentMethods from "./local-payment-methods";
 import OrderSingleCartItem from "./order-single-cart-item";
 
 const OrderArea = ({
-  stripe,
-  cardError,
   register,
   errors,
   discountAmount,
   shippingCost,
   cartTotal,
   handleShippingCost,
-  setClientSecret,
   isCheckoutSubmit,
   selectedPaymentMethod,
   paymentFlowStatus,
@@ -50,7 +47,6 @@ const OrderArea = ({
               cartTotal={cartTotal}
               shippingCost={shippingCost}
               handleShippingCost={handleShippingCost}
-              setClientSecret={setClientSecret}
             />
           </tfoot>
         </table>
@@ -60,8 +56,6 @@ const OrderArea = ({
         register={register}
         errors={errors}
         selectedPaymentMethod={selectedPaymentMethod}
-        cardError={cardError}
-        stripe={stripe}
         cart_products={cart_products}
         isCheckoutSubmit={isCheckoutSubmit}
         paymentFlowStatus={paymentFlowStatus}

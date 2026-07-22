@@ -11,7 +11,6 @@ const localPaymentMethods = [
   "JazzCash",
   "Easypaisa",
   "Bank Transfer",
-  "Debit / Credit Cards",
   "Cash on Delivery",
 ];
 

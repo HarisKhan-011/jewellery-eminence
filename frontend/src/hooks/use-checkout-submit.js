@@ -2,7 +2,6 @@
 import * as dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 //internal import
@@ -12,10 +11,7 @@ import Loader from "@components/loader/loader";
 import { set_coupon } from "src/redux/features/coupon/couponSlice";
 import useCartInfo from "./use-cart-info";
 import { set_shipping } from "src/redux/features/order/orderSlice";
-import {
-  useAddOrderMutation,
-  useCreatePaymentIntentMutation,
-} from "src/redux/features/order/orderApi";
+import { useAddOrderMutation } from "src/redux/features/order/orderApi";
 import {
   convertToPkrAmount,
   formatPkrPrice,
@@ -35,7 +31,6 @@ const apiBaseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL || "").replace(
 const useCheckoutSubmit = () => {
   const { data: offerCoupons, isError, isLoading } = useGetOfferCouponsQuery();
   const [addOrder, {}] = useAddOrderMutation();
-  const [createPaymentIntent, {}] = useCreatePaymentIntentMutation();
   const { cart_products } = useSelector((state) => state.cart);
   const { user, accessToken } = useSelector((state) => state.auth);
   const { shipping_info } = useSelector((state) => state.order);
@@ -47,14 +42,10 @@ const useCheckoutSubmit = () => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountProductType, setDiscountProductType] = useState("");
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
-  const [cardError, setCardError] = useState("");
-  const [clientSecret, setClientSecret] = useState("");
   const [paymentFlowStatus, setPaymentFlowStatus] = useState("ready");
   
   const dispatch = useDispatch();
   const router = useRouter();
-  const stripe = useStripe();
-  const elements = useElements();
 
   const {
     register,
@@ -126,26 +117,6 @@ const useCheckoutSubmit = () => {
     cart_products,
     discountProductType,
   ]);
-
-  // create payment intent for card gateway only
-  useEffect(() => {
-    if (selectedPaymentMethod === "cards" && cartTotal) {
-      createPaymentIntent({
-          price: Math.round(cartTotal),
-      })
-        .then((data) => {
-          if (data?.data?.clientSecret) {
-            setClientSecret(data.data.clientSecret);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          notifyError("Unable to initialize secure card payment.");
-        });
-    } else {
-      setClientSecret("");
-    }
-  }, [createPaymentIntent, cartTotal, selectedPaymentMethod]);
 
   // handleCouponCode
   const handleCouponCode = (e) => {
@@ -287,7 +258,6 @@ const useCheckoutSubmit = () => {
     dispatch(set_shipping(data));
     setIsCheckoutSubmit(true);
     setPaymentFlowStatus("authorizing");
-    setCardError("");
     const selectedMethod = getPaymentMethodById(data.paymentMethod);
 
     try {
@@ -311,8 +281,7 @@ const useCheckoutSubmit = () => {
         user: `${user?._id}`,
         paymentMethod: selectedMethod.title,
         paymentMethodCode: selectedMethod.id,
-        paymentStatus:
-          selectedMethod.id === "cards" ? "authorizing" : selectedMethod.paymentStatus,
+        paymentStatus: selectedMethod.paymentStatus,
         paymentDetails,
         paymentSecurity: {
           csrfProtected: true,
@@ -325,80 +294,19 @@ const useCheckoutSubmit = () => {
         savePreferredPayment: Boolean(data.savePreferredPayment),
       };
 
-      if (selectedMethod.id !== "cards") {
-        setPaymentFlowStatus("verifying");
-        await addOrderAndRedirect(
-          orderInfo,
-          selectedMethod.id === "bank_transfer"
-            ? "Order received. Bank transfer is pending verification."
-            : "Your order has been received for secure verification."
-        );
-        return;
-      }
-
-      if (!stripe || !elements || !clientSecret) {
-        throw new Error("Secure card payment is not ready yet.");
-      }
-
-      const card = elements.getElement(CardElement);
-      if (card == null) {
-        throw new Error("Please enter your card details.");
-      }
-
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card,
-      });
-
-      if (error) {
-        setCardError(error?.message);
-        throw new Error(error?.message);
-      }
-
-      await handlePaymentWithStripe({
-        ...orderInfo,
-        cardInfo: paymentMethod,
-      });
+      setPaymentFlowStatus("verifying");
+      await addOrderAndRedirect(
+        orderInfo,
+        selectedMethod.id === "bank_transfer"
+          ? "Order received. Bank transfer is pending verification."
+          : "Your order has been received for secure verification."
+      );
     } catch (err) {
       const message = err?.message || "Payment failed. Please retry.";
       notifyError(message);
       setPaymentFlowStatus("failed");
       setIsCheckoutSubmit(false);
     }
-  };
-
-  // handlePaymentWithStripe
-  const handlePaymentWithStripe = async (order) => {
-    const { paymentIntent, error: intentErr } =
-      await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-          billing_details: {
-            name: order.name || user?.name,
-            email: order.email || user?.email,
-          },
-        },
-      });
-
-    if (intentErr) {
-      setCardError(intentErr.message);
-      throw new Error(intentErr.message);
-    }
-
-    if (paymentIntent?.status !== "succeeded") {
-      throw new Error("Card payment was not completed by the gateway.");
-    }
-
-    setPaymentFlowStatus("verifying");
-
-    await addOrderAndRedirect(
-      {
-        ...order,
-        paymentIntent,
-        paymentStatus: "paid",
-      },
-      "Your payment processed successfully."
-    );
   };
 
   return {
@@ -414,12 +322,8 @@ const useCheckoutSubmit = () => {
     setTotal,
     register,
     errors,
-    cardError,
     submitHandler,
-    stripe,
     handleSubmit,
-    clientSecret,
-    setClientSecret,
     cartTotal,
     selectedPaymentMethod,
     paymentFlowStatus,

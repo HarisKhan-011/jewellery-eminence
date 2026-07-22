@@ -19,11 +19,6 @@ const allowedPaymentMethods = {
     statuses: ["awaiting_manual_verification", "paid", "failed", "refunded"],
     initialStatus: "awaiting_manual_verification",
   },
-  cards: {
-    label: "Debit / Credit Cards",
-    statuses: ["paid", "failed", "refunded"],
-    initialStatus: "paid",
-  },
   cod: {
     label: "Cash on Delivery",
     statuses: ["pending_collection", "paid", "failed"],
@@ -124,16 +119,8 @@ const validateOrderPayload = async (orderItems) => {
     }
   }
 
-  if (paymentMethodCode === "cards") {
-    if (orderItems.paymentIntent?.status !== "succeeded") {
-      throw createHttpError("Card payment was not verified by the gateway.");
-    }
-  }
-
   const requestedPaymentStatus =
-    paymentMethodCode === "cards"
-      ? "paid"
-      : orderItems.paymentStatus || method.initialStatus;
+    orderItems.paymentStatus || method.initialStatus;
 
   if (!method.statuses.includes(requestedPaymentStatus)) {
     throw createHttpError("Unsupported payment status for this method.");
@@ -185,7 +172,7 @@ const validateOrderPayload = async (orderItems) => {
       ...orderItems.paymentSecurity,
       serverValidated: true,
       duplicatePaymentCheck: true,
-      signatureVerified: paymentMethodCode === "cards",
+      signatureVerified: false,
       transactionLoggedAt: new Date().toISOString(),
     },
   };
