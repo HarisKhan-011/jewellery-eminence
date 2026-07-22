@@ -7,7 +7,6 @@ import ShopCategoryArea from "@components/shop-category/shop-category";
 import ShopProducts from "@components/products";
 import OfferPopularProduct from "@components/offer-product";
 import ShopBanner from "@components/shop-banner";
-import ShopFeature from "@components/shop-feature";
 import ShopCta from "@components/cta";
 import Footer from "@layout/footer";
 
@@ -24,7 +23,6 @@ const HomeShop = () => {
       <ShopProducts />
       <OfferPopularProduct />
       <ShopBanner />
-      <ShopFeature />
       <ShopCta />
       <Footer />
     </Wrapper>

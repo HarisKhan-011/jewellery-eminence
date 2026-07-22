@@ -37,9 +37,19 @@ const ShopProducts = () => {
 
   if (!isLoading && !isError && products?.products?.length > 0) {
     const prd_items = products.products;
-    const show_prd = prd_items.filter((item) => item.itemInfo === activeTab);
+    const tabProducts = prd_items.filter((item) => item.itemInfo === activeTab);
+    const show_prd =
+      tabProducts.length >= 4
+        ? tabProducts.slice(0, 4)
+        : [
+            ...tabProducts,
+            ...prd_items.filter(
+              (item) => !tabProducts.some((selected) => selected._id === item._id)
+            ),
+          ].slice(0, 4);
+
     content = show_prd.map((product, index) => (
-      <div key={product._id} className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+      <div key={product._id} className="col-xl-3 col-lg-3 col-md-6 col-sm-6">
         <SingleProduct product={product} imageIndex={index} />
       </div>
     ));
