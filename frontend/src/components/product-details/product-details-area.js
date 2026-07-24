@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,11 +28,13 @@ const ProductDetailsArea = ({ product }) => {
     discount,
     tags,
     sku,
+    description,
   } = product || {};
   const productImages = getProductImages(product);
   const primaryImage = getProductPrimaryImage(product);
   const categoryName = getProductCategoryName(product);
   const [activeImg, setActiveImg] = useState(primaryImage);
+
   useEffect(() => {
     setActiveImg(primaryImage);
   }, [primaryImage]);
@@ -38,121 +42,143 @@ const ProductDetailsArea = ({ product }) => {
   const dispatch = useDispatch();
   const { wishlist } = useSelector((state) => state.wishlist);
   const isWishlistAdded = wishlist.some((item) => item._id === _id);
+  const inStock = Number(quantity) > 0;
 
-  // handle add product
   const handleAddProduct = (prd) => {
     dispatch(add_cart_product(prd));
   };
 
-  // handle add wishlist
   const handleAddWishlist = (prd) => {
     dispatch(add_to_wishlist(prd));
   };
 
+  const plainDescription =
+    typeof description === "string"
+      ? description.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+      : "";
+  const shortCopy =
+    plainDescription.length > 0
+      ? plainDescription.length > 180
+        ? `${plainDescription.slice(0, 177).trim()}…`
+        : plainDescription
+      : "Shop Eminence Jewellery for refined pieces, secure checkout, and attentive care from selection to delivery.";
+
   return (
-    <section className="product__details-area pb-115">
+    <section className="product__details-area eminence-prd-details pb-115">
       <div className="container">
-        <div className="row">
+        <div className="row g-4 g-xl-5 align-items-start">
           <div className="col-xl-7 col-lg-6">
-            <div className="product__details-thumb-tab mr-70">
-              <div className="product__details-thumb-content w-img">
-                <div>
-                  {activeImg && (
-                    <Image
-                      src={activeImg}
-                      alt={getProductImageAlt(product)}
-                      width={960}
-                      height={1125}
-                      priority
-                      sizes="(max-width: 991px) 100vw, 55vw"
-                      style={{
-                        width: "100%",
-                        maxHeight: "575px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  )}
+            <div className="product__details-thumb-tab eminence-prd-gallery">
+              <div className="product__details-thumb-content w-img eminence-prd-gallery__main">
+                {activeImg && (
+                  <Image
+                    src={activeImg}
+                    alt={getProductImageAlt(product)}
+                    width={960}
+                    height={960}
+                    priority
+                    sizes="(max-width: 991px) 94vw, 52vw"
+                    className="eminence-prd-gallery__image"
+                  />
+                )}
+              </div>
+
+              {productImages.length > 1 && (
+                <div className="product__details-thumb-nav tp-tab eminence-prd-gallery__thumbs">
+                  <nav aria-label="Product images">
+                    <div className="eminence-prd-gallery__thumbs-track">
+                      {productImages.map((img, i) => (
+                        <button
+                          key={`${img}-${i}`}
+                          type="button"
+                          onClick={() => setActiveImg(img)}
+                          className={`eminence-prd-gallery__thumb ${
+                            activeImg === img ? "is-active" : ""
+                          }`}
+                          aria-label={`View image ${i + 1}`}
+                          aria-pressed={activeImg === img}
+                        >
+                          <Image
+                            src={img}
+                            alt={`${title} thumbnail ${i + 1}`}
+                            width={96}
+                            height={96}
+                            loading="lazy"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </nav>
                 </div>
-              </div>
-              <div className="product__details-thumb-nav tp-tab">
-                <nav>
-                  <div className="d-flex justify-content-center flex-wrap">
-                    {productImages.map((img, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setActiveImg(img)}
-                        className={activeImg === img ? "nav-link active" : ""}
-                      >
-                        <Image
-                          src={img}
-                          alt={`${title} thumbnail ${i + 1}`}
-                          width={110}
-                          height={110}
-                          loading="lazy"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </nav>
-              </div>
+              )}
             </div>
           </div>
+
           <div className="col-xl-5 col-lg-6">
-            <div className="product__details-wrapper">
-              <div className="product__details-stock">
-                <span>{quantity} In Stock</span>
-              </div>
-              <h3 className="product__details-title">{title}</h3>
-
-              <p className="mt-20">
-                Shop Eminence Jewellery for refined pieces, secure checkout,
-                and attentive care from selection to delivery.
-              </p>
-
-              {/* Product Details Price */}
-              <ProductDetailsPrice price={originalPrice} discount={discount} />
-              {/* Product Details Price */}
-
-              {/* quantity */}
-              <ProductQuantity />
-              {/* quantity */}
-
-              <div className="product__details-action d-flex flex-wrap align-items-center">
-                <button
-                  onClick={() => handleAddProduct(product)}
-                  type="button"
-                  className="product-add-cart-btn product-add-cart-btn-3"
-                >
-                  <CartTwo />
-                  Add to Cart
-                </button>
-                <button
-                  onClick={() => handleAddWishlist(product)}
-                  type="button"
-                  className={`product-action-btn ${
-                    isWishlistAdded ? "active" : ""
+            <div className="product__details-wrapper eminence-prd-info">
+              <div className="eminence-prd-info__meta">
+                {categoryName && (
+                  <span className="eminence-prd-info__category">
+                    {categoryName}
+                  </span>
+                )}
+                <span
+                  className={`product__details-stock eminence-prd-info__stock ${
+                    inStock ? "is-in" : "is-out"
                   }`}
                 >
-                  <HeartTwo />
-                  <span className="product-action-tooltip">
-                    Add To Wishlist
-                  </span>
-                </button>
+                  {inStock ? `${quantity} In Stock` : "Out of Stock"}
+                </span>
               </div>
-              <div className="product__details-sku product__details-more">
-                <p>SKU:</p>
-                <span>{sku}</span>
+
+              <h1 className="product__details-title eminence-prd-info__title">
+                {title}
+              </h1>
+
+              <ProductDetailsPrice price={originalPrice} discount={discount} />
+
+              <p className="eminence-prd-info__copy">{shortCopy}</p>
+
+              <div className="eminence-prd-info__buy">
+                <ProductQuantity />
+
+                <div className="product__details-action eminence-prd-info__actions">
+                  <button
+                    onClick={() => handleAddProduct(product)}
+                    type="button"
+                    className="product-add-cart-btn product-add-cart-btn-3"
+                    disabled={!inStock}
+                  >
+                    <CartTwo />
+                    Add to Cart
+                  </button>
+                  <button
+                    onClick={() => handleAddWishlist(product)}
+                    type="button"
+                    className={`product-action-btn ${
+                      isWishlistAdded ? "active" : ""
+                    }`}
+                    aria-label="Add to wishlist"
+                  >
+                    <HeartTwo />
+                    <span className="product-action-tooltip">
+                      Add To Wishlist
+                    </span>
+                  </button>
+                </div>
               </div>
-              {/* ProductDetailsCategories */}
-              <ProductDetailsCategories name={categoryName} />
-              {/* ProductDetailsCategories */}
 
-              {/* Tags */}
-              <ProductDetailsTags tag={tags} />
-              {/* Tags */}
+              <div className="eminence-prd-info__facts">
+                <div className="product__details-sku product__details-more">
+                  <p>SKU</p>
+                  <span>{sku || "—"}</span>
+                </div>
+                <ProductDetailsCategories name={categoryName} />
+                <ProductDetailsTags tag={tags} />
+              </div>
 
-              <div className="product__details-share">
-                <span>Share:</span>
+              <div className="product__details-share eminence-prd-info__share">
+                <span>Share</span>
                 <SocialShare />
               </div>
             </div>

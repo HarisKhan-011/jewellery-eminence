@@ -28,28 +28,20 @@ const ProductGridItems = ({ itemsPerPage, items, setShowingGridItems }) => {
 
   return (
     <>
-      <div
-        className="tab-pane fade show active"
-        id="nav-grid"
-        role="tabpanel"
-        aria-labelledby="nav-grid-tab"
-      >
-        {/* shop grid*/}
-        <div className="row">
-          {currentItems &&
-            currentItems.map((product, index) => (
-              <div
-                key={product._id}
-                className="col-xl-4 col-lg-4 col-md-4 col-sm-6"
-              >
-                <SingleProduct
-                  product={product}
-                  imageIndex={itemOffset + index}
-                />
-              </div>
-            ))}
-        </div>
-      {/* pagination start */}
+      <div className="row g-2 g-sm-3 g-lg-4 eminence-product-grid">
+        {currentItems &&
+          currentItems.map((product, index) => (
+            <div
+              key={product._id}
+              className="col-6 col-md-4 col-xl-3 eminence-product-col"
+            >
+              <SingleProduct
+                product={product}
+                imageIndex={itemOffset + index}
+              />
+            </div>
+          ))}
+      </div>
       <div className="row">
         <div className="col-xxl-12">
           <div className="tp-pagination tp-pagination-style-2">
@@ -60,9 +52,6 @@ const ProductGridItems = ({ itemsPerPage, items, setShowingGridItems }) => {
           </div>
         </div>
       </div>
-      {/* pagination end */}
-      </div>
-
     </>
   );
 };

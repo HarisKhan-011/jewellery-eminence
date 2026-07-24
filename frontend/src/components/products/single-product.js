@@ -52,7 +52,7 @@ const SingleProduct = ({ product, discountPrd = false, imageIndex }) => {
 
   return (
     <React.Fragment>
-      <div className="product__item p-relative transition-3 mb-50">
+      <div className="product__item eminence-product-card p-relative transition-3 mb-50">
         <div className="product__thumb w-img p-relative fix">
           <Link href={`/product-details/${_id}`}>
             <span className="product-card-media">
@@ -61,7 +61,7 @@ const SingleProduct = ({ product, discountPrd = false, imageIndex }) => {
                   src={primaryImage}
                   alt={getProductImageAlt(product)}
                   fill
-                  sizes="(max-width: 575px) 100vw, (max-width: 991px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                  sizes="(max-width: 575px) 48vw, (max-width: 991px) 33vw, (max-width: 1199px) 25vw, 22vw"
                   className="product-card-media__image"
                   loading="lazy"
                 />
@@ -71,7 +71,7 @@ const SingleProduct = ({ product, discountPrd = false, imageIndex }) => {
                   src={hoverImage}
                   alt={`${title} alternate view`}
                   fill
-                  sizes="(max-width: 575px) 100vw, (max-width: 991px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                  sizes="(max-width: 575px) 48vw, (max-width: 991px) 33vw, (max-width: 1199px) 25vw, 22vw"
                   className="product-card-media__image product-card-media__image--hover"
                   loading="lazy"
                 />

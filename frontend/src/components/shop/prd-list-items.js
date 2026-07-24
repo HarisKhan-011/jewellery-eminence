@@ -27,27 +27,20 @@ const ProductListItems = ({ itemsPerPage, items, setShowingListItems }) => {
   };
   return (
     <>
-      <div
-        className="tab-pane fade"
-        id="nav-list"
-        role="tabpanel"
-        aria-labelledby="nav-list-tab"
-      >
-        <div className="product__list-wrapper mb-30">
-          <div className="row">
-            {currentItems &&
-              currentItems.map((product, index) => (
-                <div key={product._id} className="col-lg-12 col-md-6">
-                  <SingleListProduct
-                    product={product}
-                    imageIndex={itemOffset + index}
-                  />
-                </div>
-              ))}
-          </div>
+      <div className="product__list-wrapper mb-30">
+        <div className="row">
+          {currentItems &&
+            currentItems.map((product, index) => (
+              <div key={product._id} className="col-lg-12 col-md-6">
+                <SingleListProduct
+                  product={product}
+                  imageIndex={itemOffset + index}
+                />
+              </div>
+            ))}
         </div>
+      </div>
 
-      {/* pagination start */}
       <div className="row">
         <div className="col-xxl-12">
           <div className="tp-pagination tp-pagination-style-2">
@@ -57,8 +50,6 @@ const ProductListItems = ({ itemsPerPage, items, setShowingListItems }) => {
             />
           </div>
         </div>
-      </div>
-      {/* pagination end */}
       </div>
     </>
   );

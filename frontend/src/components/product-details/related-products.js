@@ -37,7 +37,10 @@ const RelatedProducts = ({id,tags}) => {
   if (!isLoading && !isError && relatedProducts?.length > 0) {
     console.log(relatedProducts);
     content = relatedProducts.map((product) => (
-      <div key={product._id} className="col-lg-3 col-md-6">
+      <div
+        key={product._id}
+        className="col-6 col-md-4 col-lg-3 eminence-product-col"
+      >
         <SingleProduct product={product} />
       </div>
     ));
@@ -57,7 +60,7 @@ const RelatedProducts = ({id,tags}) => {
           <div className="row">
             <div className="col-xl-12">
               <div className="product__related-slider">
-                <div className="row">
+                <div className="row g-2 g-sm-3 g-lg-4 eminence-product-grid">
                   {content}
                 </div>
               </div>

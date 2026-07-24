@@ -45,28 +45,34 @@ const ShopProducts = ({ element_style = false }) => {
                 </div>
               </div>
               <div className="col-xl-6 col-lg-6 col-md-6">
-                <div className="product__tab tp-tab  mb-35">
+                <div className="product__tab tp-tab eminence-product-tabs mb-35">
                   <ul
-                    className="nav nav-tabs justify-content-md-end"
+                    className="nav nav-tabs eminence-product-tabs__list"
                     id="productTab"
+                    role="tablist"
                   >
-                    {tabs.map((tab, i) => (
-                      <li
-                        key={i}
-                        className="nav-item"
-                        onClick={() => handleTabProduct(tab)}
-                      >
-                        <button
-                          className={`nav-link ${
-                            activeTab === tab ? "active" : ""
-                          }`}
-                          id="top-tab"
-                          type="button"
+                    {tabs.map((tab) => {
+                      const isActive = activeTab === tab;
+                      return (
+                        <li
+                          key={tab}
+                          className="nav-item eminence-product-tabs__item"
+                          role="presentation"
                         >
-                          {tab}
-                        </button>
-                      </li>
-                    ))}
+                          <button
+                            className={`nav-link eminence-product-tabs__btn ${
+                              isActive ? "active" : ""
+                            }`}
+                            type="button"
+                            role="tab"
+                            aria-selected={isActive}
+                            onClick={() => handleTabProduct(tab)}
+                          >
+                            {tab}
+                          </button>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
@@ -85,7 +91,7 @@ const ShopProducts = ({ element_style = false }) => {
               {productItems.map((product) => (
                 <div
                   key={product.id}
-                  className="col-xl-3 col-lg-4 col-md-6 col-sm-6"
+                  className="col-6 col-md-4 col-lg-3 eminence-product-col"
                 >
                   <SingleProduct product={product} />
                 </div>

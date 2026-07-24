@@ -1,7 +1,7 @@
 'use client';
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar } from "swiper";
+import { FreeMode, Scrollbar } from "swiper";
 // internal
 import SingleCategory from "./single-category";
 
@@ -30,44 +30,63 @@ const homeJewelleryProducts = [
 
 const ShopCategoryArea = () => {
   return (
-    <section className="product__category pt-100 pb-100">
+    <section className="product__category eminence-category-strip pt-100 pb-100">
       <div className="container">
         <div className="row">
           <div className="col-xxl-12">
-            <div className="product__category-slider">
+            <div className="product__category-slider eminence-category-strip__slider">
               <Swiper
                 className="product__category-slider-active swiper-container"
                 slidesPerView={4}
-                spaceBetween={30}
+                spaceBetween={28}
                 loop={false}
-                modules={[Scrollbar]}
+                grabCursor
+                watchOverflow
+                modules={[FreeMode, Scrollbar]}
+                freeMode={{
+                  enabled: true,
+                  sticky: false,
+                  momentumRatio: 0.85,
+                }}
                 scrollbar={{
-                  el: ".tp-scrollbar",
-                  clickable: true,
+                  el: ".eminence-category-strip__scrollbar",
+                  draggable: true,
+                  hide: false,
                 }}
                 breakpoints={{
-                  1601: {
-                    slidesPerView: 4,
-                  },
-                  1400: {
-                    slidesPerView: 4,
-                  },
                   1200: {
                     slidesPerView: 4,
+                    spaceBetween: 28,
+                    freeMode: false,
                   },
                   992: {
                     slidesPerView: 3,
+                    spaceBetween: 24,
+                    freeMode: false,
                   },
                   768: {
-                    slidesPerView: 2,
+                    slidesPerView: 2.2,
+                    spaceBetween: 18,
+                    freeMode: {
+                      enabled: true,
+                      sticky: false,
+                    },
                   },
                   576: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
+                    slidesPerView: 1.45,
+                    spaceBetween: 14,
+                    freeMode: {
+                      enabled: true,
+                      sticky: false,
+                    },
                   },
                   0: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
+                    slidesPerView: 1.18,
+                    spaceBetween: 12,
+                    freeMode: {
+                      enabled: true,
+                      sticky: false,
+                    },
                   },
                 }}
               >
@@ -78,7 +97,7 @@ const ShopCategoryArea = () => {
                 ))}
               </Swiper>
 
-              <div className="tp-scrollbar"></div>
+              <div className="tp-scrollbar eminence-category-strip__scrollbar"></div>
             </div>
           </div>
         </div>

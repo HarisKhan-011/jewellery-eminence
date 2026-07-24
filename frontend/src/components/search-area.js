@@ -105,11 +105,11 @@ export default function SearchAreaMain({ searchText }) {
               </div>
             </div>
             <div className="shop__main">
-              <div className="row">
+              <div className="row g-2 g-sm-3 g-lg-4 eminence-product-grid">
                 {product_items?.slice(0, next)?.map((product) => (
                   <div
                     key={product._id}
-                    className="col-xl-3 col-lg-4 col-md-6 col-sm-6"
+                    className="col-6 col-md-4 col-lg-3 eminence-product-col"
                   >
                     <SingleProduct product={product} />
                   </div>
