@@ -11,23 +11,21 @@ const ShopBanner = () => {
         <div className="eminence-bridal-banner__panel">
           <div className="eminence-bridal-banner__copy">
             <span className="eminence-bridal-banner__eyebrow">
-              Bridal Jewellery Set
+              Artificial Jewellery Edit
             </span>
             <h3 className="eminence-bridal-banner__title">
-              <Link href="/shop?category=bridal-jewellery">
-                Luminous gold pieces for unforgettable celebrations
+              <Link href="/shop">
+                Elegant artificial jewellery for every celebration
               </Link>
             </h3>
             <p className="eminence-bridal-banner__text">
-              Refined bridal styling with a radiant{" "}
-              <span>gold</span> finish.
+              Lightweight, radiant designs crafted for everyday glam and
+              special moments — with a premium{" "}
+              <span>gold-look</span> finish.
             </p>
             <div className="eminence-bridal-banner__action">
-              <Link
-                href="/shop?category=bridal-jewellery"
-                className="tp-btn eminence-bridal-banner__btn"
-              >
-                Buy Now
+              <Link href="/shop" className="tp-btn eminence-bridal-banner__btn">
+                Shop Collection
                 <RightArrow />
               </Link>
             </div>
@@ -36,7 +34,7 @@ const ShopBanner = () => {
           <div className="eminence-bridal-banner__media">
             <Image
               src={banner}
-              alt="Gold bridal necklace set with matching earrings"
+              alt="Eminence artificial jewellery necklace set with matching earrings"
               className="eminence-bridal-banner__image"
               sizes="(max-width: 767px) 88vw, (max-width: 1199px) 42vw, 520px"
               priority={false}
