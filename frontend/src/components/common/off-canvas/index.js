@@ -1,74 +1,98 @@
-import React from "react";
-import Image from "next/image";
+"use client";
+
+import React, { useEffect } from "react";
 import Link from "next/link";
-// internal
-import shape from "@assets/img/shape/offcanvas-shape-1.png";
 import Logo from "@components/common/logo";
 import MobileMenus from "./mobile-menus";
 import SocialLinks from "@components/social";
+import SearchForm from "@components/forms/search-form";
+
+const PHONE_DISPLAY = "03424495548";
+const PHONE_HREF = "tel:03424495548";
+const EMAIL = "eminencejewelery1@gmail.com";
 
 const OffCanvas = ({ isOffCanvasOpen, setIsOffCanvasOpen }) => {
+  useEffect(() => {
+    document.body.classList.toggle("eminence-nav-locked", isOffCanvasOpen);
+    return () => document.body.classList.remove("eminence-nav-locked");
+  }, [isOffCanvasOpen]);
+
+  const closeMenu = () => setIsOffCanvasOpen(false);
+
   return (
-    <React.Fragment>
+    <>
       <div
-        className={`offcanvas__area offcanvas__area-1 ${
+        className={`offcanvas__area offcanvas__area-1 eminence-mobile-nav ${
           isOffCanvasOpen ? "offcanvas-opened" : ""
         }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
       >
-        <div className="offcanvas__wrapper">
-          <div className="offcanvas__shape">
-            <Image className="offcanvas__shape-1" src={shape} alt="shape" />
-          </div>
+        <div className="offcanvas__wrapper eminence-mobile-nav__wrapper">
           <div className="offcanvas__close">
             <button
-              onClick={() => setIsOffCanvasOpen(false)}
+              onClick={closeMenu}
               className="offcanvas__close-btn offcanvas-close-btn"
+              aria-label="Close menu"
+              type="button"
             >
               <i className="fa-regular fa-xmark"></i>
             </button>
           </div>
-          <div className="offcanvas__content">
-            <div className="offcanvas__top mb-40 d-flex justify-content-between align-items-center">
-              <div className="offcanvas__logo logo">
-                <Link href="/">
-                  <Logo className="eminence-logo--mobile" sizes="150px" />
-                </Link>
-              </div>
+
+          <div className="offcanvas__content eminence-mobile-nav__content">
+            <div className="eminence-mobile-nav__top">
+              <Link href="/" onClick={closeMenu} className="eminence-mobile-nav__logo">
+                <Logo className="eminence-logo--mobile" sizes="(max-width: 767px) 42vw, 150px" />
+              </Link>
             </div>
-            <div className="mobile-menu-3 fix mb-40 menu-counter mean-container d-lg-none">
+
+            <div className="eminence-mobile-nav__search d-xl-none">
+              <SearchForm mobile />
+            </div>
+
+            <div className="mobile-menu-3 fix menu-counter mean-container d-xl-none eminence-mobile-nav__menu">
               <div className="mean-bar">
-                {/* MobileMenus start*/}
-                <MobileMenus />
-                {/* MobileMenus end*/}
+                <MobileMenus onNavigate={closeMenu} />
               </div>
             </div>
-            <div className="offcanvas__btn">
-              <a href="#" className="tp-btn-offcanvas">
-                Getting Started <i className="fa-regular fa-chevron-right"></i>
-              </a>
+
+            <div className="eminence-mobile-nav__cta">
+              <Link href="/shop" className="tp-btn-offcanvas" onClick={closeMenu}>
+                Shop Jewellery
+                <i className="fa-regular fa-chevron-right"></i>
+              </Link>
             </div>
-            <div className="offcanvas__social">
-              <h3 className="offcanvas__social-title">Follow :</h3>
-              <SocialLinks />
-            </div>
-            <div className="offcanvas__contact">
-              <p className="offcanvas__contact-call">
-                <a href="tel:+964-742-44-763">+964 742 44 763</a>
-              </p>
-              <p className="offcanvas__contact-mail">
-                <a href="mailto:info@eminencejewellery.com">info@eminencejewellery.com</a>
-              </p>
+
+            <div className="eminence-mobile-nav__footer">
+              <div className="offcanvas__social eminence-mobile-nav__social">
+                <h3 className="offcanvas__social-title">Follow us</h3>
+                <SocialLinks />
+              </div>
+
+              <div className="offcanvas__contact eminence-mobile-nav__contact">
+                <a href={PHONE_HREF} className="eminence-mobile-nav__phone">
+                  {PHONE_DISPLAY}
+                </a>
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="eminence-mobile-nav__email"
+                >
+                  {EMAIL}
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      {/* overlay */}
+
       <div
-        onClick={() => setIsOffCanvasOpen(false)}
+        onClick={closeMenu}
         className={`body-overlay ${isOffCanvasOpen ? "opened" : ""}`}
-      ></div>
-      {/* overlay */}
-    </React.Fragment>
+        aria-hidden={!isOffCanvasOpen}
+      />
+    </>
   );
 };
 

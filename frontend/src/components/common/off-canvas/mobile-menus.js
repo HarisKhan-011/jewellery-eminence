@@ -1,52 +1,58 @@
+"use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
-// internal
 import menu_data from "@layout/menu-data";
 
-const MobileMenus = () => {
-  const [subMenu, setSubMenu] = useState("");
+const MobileMenus = ({ onNavigate }) => {
   const [navTitle, setNavTitle] = useState("");
-  //openMobileMenu
+
   const openMobileMenu = (menu) => {
-    if (navTitle === menu) {
-      setNavTitle("");
-    } else {
-      setNavTitle(menu);
-    }
+    setNavTitle((current) => (current === menu ? "" : menu));
   };
+
   return (
-    <nav className="mean-nav">
+    <nav className="mean-nav" aria-label="Mobile">
       <ul>
         {menu_data.map((menu, i) => (
           <React.Fragment key={i}>
-            {!menu.hasDropdown &&<li>
-              <Link href={menu.link}>{menu.title}</Link>
-            </li>}
+            {!menu.hasDropdown && (
+              <li>
+                <Link href={menu.link} onClick={onNavigate}>
+                  {menu.title}
+                </Link>
+              </li>
+            )}
             {menu.hasDropdown && (
               <li className="has-dropdown">
-                <Link href={menu.link}>{menu.title}</Link>
+                <Link href={menu.link} onClick={onNavigate}>
+                  {menu.title}
+                </Link>
                 <ul
                   className="submenu"
                   style={{
                     display: navTitle === menu.title ? "block" : "none",
                   }}
                 >
-                  {menu.submenus.map((sub, i) => (
-                    <li key={i}>
-                      <Link href={sub.link}>{sub.title}</Link>
+                  {menu.submenus.map((sub, index) => (
+                    <li key={index}>
+                      <Link href={sub.link} onClick={onNavigate}>
+                        {sub.title}
+                      </Link>
                     </li>
                   ))}
                 </ul>
-                <a
+                <button
+                  type="button"
                   className={`mean-expand ${
                     navTitle === menu.title ? "mean-clicked" : ""
                   }`}
-                  href="#"
                   onClick={() => openMobileMenu(menu.title)}
-                  style={{ fontSize: "18px" }}
+                  aria-expanded={navTitle === menu.title}
+                  aria-label={`Expand ${menu.title}`}
                 >
                   <i className="fal fa-plus"></i>
-                </a>
+                </button>
               </li>
             )}
           </React.Fragment>

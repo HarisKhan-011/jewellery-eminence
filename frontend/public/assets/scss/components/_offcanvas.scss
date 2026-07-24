@@ -10,7 +10,7 @@
         position: fixed;
         right: 0;
         top: 0;
-        width: 360px;
+        width: min(100%, 22.5rem);
         height: 100%;
         @include transform(translateX(calc(100% + 80px)));
         background: var(--tp-common-white)  none repeat scroll 0 0;
@@ -1487,7 +1487,7 @@
         position: fixed;
         right: 0;
         top: 0;
-        width: 360px;
+        width: min(100%, 22.5rem);
         height: 100%;
         @include transform(translateX(calc(100% + 80px)));
         background: var(--tp-common-white)  none repeat scroll 0 0;
